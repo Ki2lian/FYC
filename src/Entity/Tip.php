@@ -6,6 +6,7 @@ use App\Repository\TipRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: TipRepository::class)]
 class Tip
@@ -13,31 +14,40 @@ class Tip
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(["data-tip","data-comment","data-rating"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["data-tip","data-comment","data-rating"])]
     private $title;
 
     #[ORM\Column(type: 'text')]
+    #[Groups(["data-tip"])]
     private $content;
 
     #[ORM\Column(type: 'datetime')]
+    #[Groups(["data-tip"])]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime')]
+    #[Groups(["data-tip"])]
     private $updatedAt;
 
     #[ORM\OneToMany(mappedBy: 'tip', targetEntity: Comment::class, orphanRemoval: true)]
+    #[Groups(["data-tip"])]
     private $comments;
 
     #[ORM\OneToMany(mappedBy: 'tip', targetEntity: Rating::class, orphanRemoval: true)]
+    #[Groups(["data-tip"])]
     private $ratings;
 
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'tips')]
+    #[Groups(["data-tip"])]
     private $tag;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'tips')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["data-tip"])]
     private $user;
 
     public function __construct()

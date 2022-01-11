@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\RatingRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: RatingRepository::class)]
 class Rating
@@ -11,21 +12,30 @@ class Rating
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(["data-rating","data-tip"])]
     private $id;
 
     #[ORM\ManyToOne(targetEntity: Tip::class, inversedBy: 'ratings')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["data-rating","data-tip"])]
     private $tip;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'ratings')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["data-rating","data-tip"])]
     private $user;
 
     #[ORM\Column(type: 'datetime')]
+    #[Groups(["data-rating"])]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime')]
+    #[Groups(["data-rating"])]
     private $updatedAt;
+
+    #[ORM\Column(type: 'integer')]
+    #[Groups(["data-rating","data-tip"])]
+    private $value;
 
     public function __construct()
     {
@@ -82,6 +92,18 @@ class Rating
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getValue(): ?int
+    {
+        return $this->value;
+    }
+
+    public function setValue(int $value): self
+    {
+        $this->value = $value;
 
         return $this;
     }

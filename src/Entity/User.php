@@ -20,34 +20,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups("data-user")]
+    #[Groups(["data-user","data-comment","data-tip","data-rating"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
-    #[Groups("data-user")]
+    #[Groups(["data-user"])]
     private $email;
 
     #[ORM\Column(type: 'json')]
-    #[Groups("data-user")]
+    #[Groups(["data-user"])]
     private $roles = [];
 
     #[ORM\Column(type: 'string')]
     private $password;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups("data-user")]
+    #[Groups(["data-user","data-tip","data-comment","data-rating"])]
     private $pseudo;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups("data-user")]
+    #[Groups(["data-user"])]
     private $level;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups("data-user")]
+    #[Groups(["data-user"])]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups("data-user")]
+    #[Groups(["data-user"])]
     private $updatedAt;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class, orphanRemoval: true)]

@@ -6,6 +6,7 @@ use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: TagRepository::class)]
 class Tag
@@ -13,15 +14,19 @@ class Tag
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(["data-tip","data-tag"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["data-tip","data-tag"])]
     private $name;
 
     #[ORM\Column(type: 'datetime')]
+    #[Groups(["data-tag"])]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime')]
+    #[Groups(["data-tag"])]
     private $updatedAt;
 
     #[ORM\ManyToMany(targetEntity: Tip::class, mappedBy: 'tag')]
