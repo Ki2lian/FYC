@@ -36,6 +36,10 @@ class Tip
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'tips')]
     private $tag;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'tips')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $user;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -178,6 +182,18 @@ class Tip
     public function removeTag(Tag $tag): self
     {
         $this->tag->removeElement($tag);
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

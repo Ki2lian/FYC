@@ -48,6 +48,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Rating::class, orphanRemoval: true)]
     private $ratings;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Tip::class, orphanRemoval: true)]
+    private $tips;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -55,6 +58,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->level = "Novice";
         $this->comments = new ArrayCollection();
         $this->ratings = new ArrayCollection();
+        $this->tips = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -229,6 +233,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($rating->getUser() === $this) {
                 $rating->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tip[]
+     */
+    public function getTips(): Collection
+    {
+        return $this->tips;
+    }
+
+    public function addTip(Tip $tip): self
+    {
+        if (!$this->tips->contains($tip)) {
+            $this->tips[] = $tip;
+            $tip->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTip(Tip $tip): self
+    {
+        if ($this->tips->removeElement($tip)) {
+            // set the owning side to null (unless already changed)
+            if ($tip->getUser() === $this) {
+                $tip->setUser(null);
             }
         }
 
