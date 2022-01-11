@@ -4,6 +4,7 @@
 !app/cache/.gitkeep
 !app/logs/.gitkeep
 
+.php-version
 .env.local
 .env.local.php
 .env.*.local
