@@ -50,8 +50,12 @@ class Tip
     #[Groups(["data-tip"])]
     private $user;
 
+    #[ORM\Column(type: 'boolean')]
+    private $isValid;
+
     public function __construct()
     {
+        $this->isValid = 0;
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
         $this->comments = new ArrayCollection();
@@ -204,6 +208,18 @@ class Tip
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getIsValid(): ?bool
+    {
+        return $this->isValid;
+    }
+
+    public function setIsValid(bool $isValid): self
+    {
+        $this->isValid = $isValid;
 
         return $this;
     }

@@ -6,8 +6,13 @@ use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * @UniqueEntity(fields={"name"}, message="Il y a déjà un tag avec ce nom")
+ */
 #[ORM\Entity(repositoryClass: TagRepository::class)]
 class Tag
 {
@@ -17,8 +22,9 @@ class Tag
     #[Groups(["data-tip","data-tag"])]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     #[Groups(["data-tip","data-tag"])]
+    #[Assert\NotBlank(message: 'Veuillez saisir un nom',)]
     private $name;
 
     #[ORM\Column(type: 'datetime')]

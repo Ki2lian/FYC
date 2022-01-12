@@ -103,4 +103,5 @@ class APIController extends AbstractController
         $rating = $rr->find($id);
         return $rating === null ? $this->json(["code" => 404, "message" => "L'astuce n'a pas été trouvé"]) : $this->json($rating, 200, [], ['groups' => "data-rating"]);
     }
+
 }
