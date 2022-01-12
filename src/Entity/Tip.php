@@ -55,7 +55,7 @@ class Tip
 
     public function __construct()
     {
-        $this->isValid = 0;
+        $this->isValid = false;
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
         $this->comments = new ArrayCollection();

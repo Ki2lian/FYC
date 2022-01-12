@@ -29,8 +29,9 @@ class AppFixtures extends Fixture
         for ($i=0; $i < 6; $i++) {
             $user = new User();
             $pseudo = $faker->firstName();
+            $number = random_int(1, 100);
             $user   ->setPseudo($pseudo)
-                    ->setEmail("$pseudo@fyc.fr")
+                    ->setEmail("$pseudo.$number@fyc.fr")
                     ->setPassword(
                         $this->userPasswordHasher->hashPassword(
                             $user,

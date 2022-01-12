@@ -14,8 +14,11 @@ class HomeController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(Request $request): Response
     {
+        $tag = new Tag();
+        $form = $this->createForm(TagType::class, $tag);
+
         return $this->render('home/index.html.twig', [
-           
+           'form' => $form->createView()
         ]);
     }
 }

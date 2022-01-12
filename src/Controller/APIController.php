@@ -2,18 +2,25 @@
 
 namespace App\Controller;
 
+use App\Entity\Tag;
+use App\Form\TagType;
 use App\Repository\CommentRepository;
 use App\Repository\RatingRepository;
 use App\Repository\TagRepository;
 use App\Repository\TipRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/api')]
 class APIController extends AbstractController
 {
+    /**
+     * User
+     */
     #[Route('/users/{token}/{skip}/{fetch}', name: 'api_users_all_params', methods: ['GET'])]
     #[Route('/users/{token}/{skip}', name: 'api_users_skip_param', methods: ['GET'])]
     #[Route('/users/{token}', name: 'api_users_no_params', methods: ['GET'])]
@@ -32,6 +39,9 @@ class APIController extends AbstractController
         return $user === null ? $this->json(["code" => 404, "message" => "L'utilisateur n'a pas été trouvé"]) : $this->json($user, 200, [], ['groups' => "data-user"]);
     }
 
+    /**
+     * Tip
+     */
     #[Route('/tips/{token}/{skip}/{fetch}', name: 'api_tips_all_params', methods: ['GET'])]
     #[Route('/tips/{token}/{skip}', name: 'api_tips_skip_param', methods: ['GET'])]
     #[Route('/tips/{token}', name: 'api_tips_no_params', methods: ['GET'])]
@@ -49,6 +59,10 @@ class APIController extends AbstractController
         $tip = $tr->find($id);
         return $tip === null ? $this->json(["code" => 404, "message" => "L'astuce n'a pas été trouvé"]) : $this->json($tip, 200, [], ['groups' => "data-tip"]);
     }
+
+    /**
+     * Tag
+     */
 
     #[Route('/tags/{token}/{skip}/{fetch}', name: 'api_tags_all_params', methods: ['GET'])]
     #[Route('/tags/{token}/{skip}', name: 'api_tags_skip_param', methods: ['GET'])]
@@ -68,6 +82,30 @@ class APIController extends AbstractController
         return $tag === null ? $this->json(["code" => 404, "message" => "L'astuce n'a pas été trouvé"]) : $this->json($tag, 200, [], ['groups' => "data-tag"]);
     }
 
+    #[Route('/tag', name: 'api_add_tag', methods: ['POST'])]
+    public function addTag(EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $isAjax = $request->isXMLHttpRequest();
+        if (!$isAjax) return new Response('', 404);
+
+        $tag = new Tag();
+        $form = $this->createForm(TagType::class, $tag);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $entityManager->persist($tag);
+            $entityManager->flush();
+            return $this->json(["code" => 200, "message" => "Tag ajouté"], 200);
+        }
+        return $this->json(array(
+            "code" => 200,
+            "errors" => $form->getErrors()
+        ),200);
+    }
+
+    /**
+     * Comment
+     */
+
     #[Route('/comments/{token}/{skip}/{fetch}', name: 'api_comments_all_params', methods: ['GET'])]
     #[Route('/comments/{token}/{skip}', name: 'api_comments_skip_param', methods: ['GET'])]
     #[Route('/comments/{token}', name: 'api_comments_no_params', methods: ['GET'])]
@@ -85,6 +123,10 @@ class APIController extends AbstractController
         $comment = $cr->find($id);
         return $comment === null ? $this->json(["code" => 404, "message" => "L'astuce n'a pas été trouvé"]) : $this->json($comment, 200, [], ['groups' => "data-comment"]);
     }
+
+    /**
+     * Ratings
+     */
 
     #[Route('/ratings/{token}/{skip}/{fetch}', name: 'api_ratings_all_params', methods: ['GET'])]
     #[Route('/ratings/{token}/{skip}', name: 'api_ratings_skip_param', methods: ['GET'])]

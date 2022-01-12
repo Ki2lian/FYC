@@ -12,5 +12,20 @@
   </div>
 {% endverbatim %}
 
+{{ form_start(form, {
+    'attr': {'id': 'formAdd'}
+}) }}
+
+{{ form_row(form.name) }}
+
+<button type="submit" class="btn btn-success">Envoyer</button>
+{{ form_end(form) }}
+
+
+<script>
+  const urlAPI = "{{ path('api_add_tag') }}"
+</script>
+
+{{ encore_entry_script_tags('api_tag') }}
 
 {% endblock %}
