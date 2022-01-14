@@ -87,19 +87,76 @@ class APIController extends AbstractController
     {
         $isAjax = $request->isXMLHttpRequest();
         if (!$isAjax) return new Response('', 404);
-
         $tag = new Tag();
         $form = $this->createForm(TagType::class, $tag);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $entityManager->persist($tag);
             $entityManager->flush();
-            return $this->json(["code" => 200, "message" => "Tag ajouté"], 200);
+            return $this->json([
+                "code" => 200, 
+                "message" => "Tag ajouté",
+                "info" => array(
+                    "id" => $tag->getId(),
+                    "name" => $tag->getName()
+                )
+            ], 200);
         }
         return $this->json(array(
             "code" => 200,
             "errors" => $form->getErrors()
         ),200);
+    }
+
+    #[Route('/tag', name: 'api_edit_tag', methods: ['PUT'])]
+    public function editTag(EntityManagerInterface $entityManager, Request $request, TagRepository $tr): Response
+    {
+        $isAjax = $request->isXMLHttpRequest();
+        if (!$isAjax) return new Response('', 404);
+
+        $tag = $tr->find($request->get('id'));
+    
+        $form = $this->createForm(TagType::class, $tag, array('method' => 'PUT'));
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $tag->setUpdatedAt(new \DateTime());
+            $entityManager->flush();
+            return $this->json([
+                "code" => 200,
+                "message" => "Tag modifié",
+                "info" => array(
+                    "name" => $tag->getName()
+                )
+            ], 200);
+        }
+        return $this->json(array(
+            "code" => 200,
+            "errors" => $form->getErrors()
+        ),200);
+    }
+
+    #[Route('/tag', name: 'api_delete_tag', methods: ['DELETE'])]
+    public function deleteTag(EntityManagerInterface $entityManager, Request $request, TagRepository $tr): Response
+    {
+        $isAjax = $request->isXMLHttpRequest();
+        if (!$isAjax) return new Response('', 404);
+
+        $tag = $tr->find($request->get('id'));
+        if($tag === null){
+            return $this->json([
+                "code" => 404,
+                "message" => "Tag non trouvé, id manquant ou id inexistant"
+            ], 404);
+        }
+    
+
+        $entityManager->remove($tag);
+        $entityManager->flush();
+        return $this->json([
+            "code" => 200,
+            "message" => "Tag supprimé"
+        ], 200);
     }
 
     /**

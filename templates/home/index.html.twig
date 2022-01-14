@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% set tagsArray = [] %}
 
 {% block title %}Hello HomeController!{% endblock %}
 
@@ -12,18 +13,51 @@
   </div>
 {% endverbatim %}
 
-{{ form_start(form, {
-    'attr': {'id': 'formAdd'}
-}) }}
 
-{{ form_row(form.name) }}
+<button class="btn btn-success add-tag">Formulaire d'ajout</button>
 
-<button type="submit" class="btn btn-success">Envoyer</button>
-{{ form_end(form) }}
+<div id="tag" class="border my-5 p-1">
+  <h1>Ajouter</h1>
+  {{ form_start(form, {
+      'attr': {'id': 'formAdd'}
+  }) }}
 
+  {{ form_row(form.name) }}
+
+  <button type="submit" class="btn btn-success">Ajouter</button>
+  {{ form_end(form) }}
+</div>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <th>Nom</th>
+      <th>Action</th>
+    </thead>
+    <tbody>
+      {% for tag in tags %}
+          {% set tagsArray = tagsArray|merge([ {id: tag.id, name: tag.name}]) %}
+      <tr>
+        <td>{{ tag.name }}</td>
+        <td>
+          <div class="d-flex align-items-center">
+            <button class="btn btn-primary me-2 edit-tag">Edit</button>
+            <button class="btn btn-danger delete-tag">Delete</button>
+          </div>
+        </td>
+      </tr>
+
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
 
 <script>
-  const urlAPI = "{{ path('api_add_tag') }}"
+  const addTagURL = "{{ path('api_add_tag') }}"
+  const editTagURL = "{{ path('api_edit_tag') }}"
+  const deleteTagURL = "{{ path('api_delete_tag') }}"
+  const tagsArray = JSON.parse('{{ tagsArray |json_encode | raw }}');
 </script>
 
 {{ encore_entry_script_tags('api_tag') }}
