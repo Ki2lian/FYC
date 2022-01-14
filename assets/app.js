@@ -9,8 +9,14 @@
 import './styles/global.scss';
 import './styles/app.css';
 import Vue from 'vue'
+import NavBar from "./components/NavBar.vue"
 
-new Vue({ el: '#app' })
+new Vue({ 
+    el: '#app', 
+    components: {
+        NavBar,
+    }
+})
 
 require('bootstrap');
 require('@fortawesome/fontawesome-free/css/all.min.css');
