@@ -24,7 +24,7 @@ class Tag
 
     #[ORM\Column(type: 'string', length: 255, unique: true)]
     #[Groups(["data-tip","data-tag"])]
-    #[Assert\NotBlank(message: 'Veuillez saisir un nom',)]
+    #[Assert\NotBlank(message: 'Veuillez saisir un nom')]
     private $name;
 
     #[ORM\Column(type: 'datetime')]

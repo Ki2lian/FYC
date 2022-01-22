@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Tag;
+use App\Form\CommentType;
 use App\Form\TagType;
 use App\Repository\TagRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,14 +17,24 @@ class HomeController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(Request $request, TagRepository $tr): Response
     {
-        $tag = new Tag();
-        $form = $this->createForm(TagType::class, $tag);
+        // $tag = new Tag();
+        // $form = $this->createForm(TagType::class, $tag);
+        // $view = $this->renderView('form/tag.html.twig', ['form' => $form->createView()]);
 
-        $tags = $tr->findAll();
+        // $tags = $tr->findAll();
+        // $urls = array(
+        //     "tag" => $this->generateUrl('api_add_tag', array(), true ),
+        // );
+
+        // $comment = new Comment();
+        // $form = $this->createForm(CommentType::class, $comment);
+        
 
         return $this->render('home/index.html.twig', [
-           'form' => $form->createView(),
-           'tags' => $tags
+            // 'form' => $form->createView(),
+           //'tags' => $tags,
+           //'urls' => $urls,
+        //    'view' => $view
         ]);
     }
 }
