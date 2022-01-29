@@ -57,6 +57,7 @@ $seconday_color: #EEEEEE;
 
 #nav-bar {
     font-family: 'Roboto Slab', serif;
+    width: 100%;
 }
 
 .logo {
@@ -98,6 +99,7 @@ button {
 .search {
     
     &__input {
+        background-color: $seconday_color !important;
         width: 90%;
         padding: 12px 24px;
 
