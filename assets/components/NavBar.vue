@@ -3,7 +3,7 @@
         <div class="col-1 d-flex align-items-center justify-content-center"><div class="logo">FYC.</div></div>
         <div class="col-8 d-inline-flex align-items-center menus">
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuAstuces" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuAstuces" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Astuces
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuAstuces">
@@ -13,7 +13,7 @@
             </div>
 
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuItems" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuItems" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Items
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuItems">
@@ -23,7 +23,7 @@
             </div>
 
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuProfil" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuProfil" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Profil
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuProfil">
