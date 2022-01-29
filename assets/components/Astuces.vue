@@ -22,6 +22,7 @@
                     ></v-checkbox>
                     <label for="date_search">Trier par date</label>
                     <input type="date" name="date_search">
+                    <div><input type="submit" value="Valider"></div>
                 </form>
             </div>
         </div>
@@ -91,9 +92,6 @@ export default {
     },
 
     methods: {
-        selectorSearch(event) {
-            console.log(event.target.value);
-        },
 
         checkSearch() {
             console.log("on check search");
@@ -172,6 +170,14 @@ $background: #D8D8D8;
             border: 2px solid $text;
             border-radius: 10px;
             padding: 5px;
+        }
+
+        & input[type=submit] {
+            border: 2px solid $text;
+            border-radius: 10px;
+            padding: 5px;
+            background-color: $interactive_text;
+            color: $seconday_color;
         }
     }
 }
