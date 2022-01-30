@@ -29,8 +29,8 @@
         </div>
         <div class="block__second">
             <!-- Visualisation de 12 en 12, changer nombreCartesVisible si l'on veut autre chose -->
-            <div class="cards">
-                <div v-for="item in actualCards" :key="item.id" class="card_custom">
+            <div class="row">
+                <div v-for="item in actualCards" :key="item.id" class="col-xl-3 col-lg-4 col-sm-6 col-12">
                     <!-- Sûrement faire du props pour récupérer les datas à envoyer au component Card -->
                     <Card />
                 </div>
@@ -117,7 +117,7 @@ $background: #D8D8D8;
 //main container
 .block {
     &__first {
-        height: 100vh;
+        height: 620px;
         background-image: url("../assets/background.png");
         background-size: 100%;
         background-repeat: no-repeat;
@@ -180,17 +180,6 @@ $background: #D8D8D8;
             color: $seconday_color;
         }
     }
-}
-
-.cards {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.card_custom {
-    flex: 0 0 20.333333%;
-    margin: 15px;
 }
 
 </style>
