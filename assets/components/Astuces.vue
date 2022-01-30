@@ -42,13 +42,14 @@
                 @input="onPageChange" color="rgba(81, 71, 197, 1)"
             ></v-pagination>
         </div>
-        <!-- NEED FOOTER HERE -->
+        <Footer />
     </div>
 </template>
 
 <script>
 import NavBar from "./component/NavBar.vue"
 import Card from "./component/Card.vue"
+import Footer from "./component/FooterVue.vue"
 
 export default {
     data() {
@@ -78,6 +79,7 @@ export default {
     components: {
         NavBar,
         Card,
+        Footer,
     },
 
     mounted() {
