@@ -29,7 +29,7 @@
         </div>
         <div class="block__second">
             <!-- Visualisation de 12 en 12, changer nombreCartesVisible si l'on veut autre chose -->
-            <div class="row">
+            <div class="row justify-content-center">
                 <div v-for="item in actualCards" :key="item.id" class="col-xl-3 col-lg-4 col-sm-6 col-12">
                     <!-- Sûrement faire du props pour récupérer les datas à envoyer au component Card -->
                     <Card />
@@ -120,7 +120,7 @@ $background: #D8D8D8;
 .block {
     &__first {
         height: 620px;
-        background-image: url("../assets/background.png");
+        background-image: url("../img/background.png");
         background-size: 100%;
         background-repeat: no-repeat;
     }
