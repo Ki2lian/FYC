@@ -37,8 +37,8 @@ class CommentController extends AbstractController
     #[Route('', name: 'api_add_comment', methods: ['POST'])]
     public function addComment(EntityManagerInterface $entityManager, Request $request, TipRepository $tipr, UserRepository $ur): Response
     {
-        $isAjax = $request->isXMLHttpRequest();
-        if (!$isAjax) return new Response('', 404);
+        // $isAjax = $request->isXMLHttpRequest();
+        // if (!$isAjax) return new Response('', 404);
 
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
@@ -54,8 +54,7 @@ class CommentController extends AbstractController
             $comment->setTip($tip);
             $comment->setUser($this->getUser());
 
-            // Pour postman:
-            // $comment->setUser($ur->find($request->get('id_user')));
+            $comment->setUser($ur->find($request->get('id_user')));
 
 
             $entityManager->persist($comment);
