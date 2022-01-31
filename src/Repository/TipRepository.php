@@ -19,6 +19,17 @@ class TipRepository extends ServiceEntityRepository
         parent::__construct($registry, Tip::class);
     }
 
+    public function search($q){
+        return $this->createQueryBuilder('t')
+        ->where('t.title LIKE :q')->setParameter('q', '%'.$q.'%')
+        ->orWhere('t.content LIKE :q')->setParameter('q', '%'.$q.'%')
+        ->andWhere('t.isValid = 1')
+        ->orderBy('t.id', 'DESC')
+        ->getQuery()
+        ->setMaxResults(10)
+        ->setFirstResult(0)
+        ->getResult();
+    }
     // /**
     //  * @return Tip[] Returns an array of Tip objects
     //  */

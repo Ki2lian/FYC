@@ -14,11 +14,11 @@ class Tip
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["data-tip","data-comment","data-rating"])]
+    #[Groups(["data-tip","data-comment","data-rating", "data-astuces-search"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["data-tip","data-comment","data-rating"])]
+    #[Groups(["data-tip","data-comment","data-rating", "data-astuces-search"])]
     private $title;
 
     #[ORM\Column(type: 'text')]
