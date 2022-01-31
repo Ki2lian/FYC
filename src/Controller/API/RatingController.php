@@ -38,10 +38,8 @@ class RatingController extends AbstractController
     #[Route('', name: 'api_add_rate', methods: ['POST'])]
     public function addRate(EntityManagerInterface $entityManager, Request $request, TipRepository $tipr, UserRepository $ur): Response
     {
-        
-        
-        // $isAjax = $request->isXMLHttpRequest();
-        // if (!$isAjax) return new Response('', 404);
+        $isAjax = $request->isXMLHttpRequest();
+        if (!$isAjax) return new Response('', 404);
 
         $rate = new Rating();
         $form = $this->createForm(RatingType::class, $rate);
@@ -55,19 +53,19 @@ class RatingController extends AbstractController
                 ),404); 
             }
             $rate->setTip($tip);
-            //$rate->setUser($this->getUser());
+            $rate->setUser($this->getUser());
 
             //Pour postman:
-            $rate->setUser($ur->find($request->get('id_user')));
+            //$rate->setUser($ur->find($request->get('id_user')));
             
             $note = $tip->getRatings();
             foreach($note as $n){
                 $user = $n->getUser();
-                if($ur->find($request->get('id_user') == $user->getId())){
+                if($ur->find($this->getUser()->getId() == $user->getId())){
                     return $this->json(array(
-                        "code" => 404,
+                        "code" => 403,
                         "errors" => "La note n'a pas été ajouté car l'utilisateur à déjà noté cette astuce'"
-                    ),404); 
+                    ),403); 
                 }
             }
 

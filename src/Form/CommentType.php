@@ -23,7 +23,7 @@ class CommentType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Comment::class,
-            'csrf_protection' => false, // juste pour les tests sur POSTMAN, à retirer après
+            //'csrf_protection' => false,
         ]);
     }
 }

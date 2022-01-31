@@ -34,17 +34,17 @@ class TipController extends AbstractController
     }
 
     #[Route('', name: 'api_add_tip', methods: ['POST'])]
-    public function addTip(EntityManagerInterface $entityManager, Request $request, TipRepository $tr, UserRepository $ur): Response
+    public function addTip(EntityManagerInterface $entityManager, Request $request, UserRepository $ur): Response
     {
-        // $isAjax = $request->isXMLHttpRequest();
-        // if (!$isAjax) return new Response('', 404);
+        $isAjax = $request->isXMLHttpRequest();
+        if (!$isAjax) return new Response('', 404);
 
         $tip = new Tip();
         $form = $this->createForm(TipType::class, $tip);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            //$rate->setUser($this->getUser());
-            $tip->setUser($tr->find($request->get('id_user')));
+            $tip->setUser($this->getUser());
+            // $tip->setUser($tr->find($request->get('id_user')));
             $entityManager->persist($tip);
             $entityManager->flush();
             return $this->json([
@@ -66,8 +66,8 @@ class TipController extends AbstractController
     #[Route('', name: 'api_edit_tip', methods: ['PUT'])]
     public function editTip(EntityManagerInterface $entityManager, Request $request, TipRepository $tr, UserRepository $ur): Response
     {
-        // $isAjax = $request->isXMLHttpRequest();
-        // if (!$isAjax) return new Response('', 404);
+        $isAjax = $request->isXMLHttpRequest();
+        if (!$isAjax) return new Response('', 404);
 
         $tip = $tr->find($request->get('id'));
         
@@ -82,6 +82,12 @@ class TipController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+            if($tip->getUser() != $this->getUser()){
+                return $this->json([
+                    "code" => 403,
+                    "message" => "Vous n'avez pas l'autorisation de modifier cette astuce"
+                ], 403);
+            }
             //$rate->setUser($this->getUser());
             $tip->setUpdatedAt(new \DateTime());
             $entityManager->flush();
