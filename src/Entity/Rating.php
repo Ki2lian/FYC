@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\RatingRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: RatingRepository::class)]
 class Rating
@@ -35,6 +37,7 @@ class Rating
 
     #[ORM\Column(type: 'integer')]
     #[Groups(["data-rating","data-tip"])]
+    #[Assert\NotBlank(message: 'Veuillez saisir une note')]
     private $value;
 
     public function __construct()

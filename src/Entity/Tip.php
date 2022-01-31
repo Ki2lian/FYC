@@ -6,6 +6,7 @@ use App\Repository\TipRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: TipRepository::class)]
@@ -19,10 +20,12 @@ class Tip
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(["data-tip","data-comment","data-rating", "data-astuces-search"])]
+    #[Assert\NotBlank(message: 'Veuillez saisir un titre')]
     private $title;
 
     #[ORM\Column(type: 'text')]
     #[Groups(["data-tip"])]
+    #[Assert\NotBlank(message: 'Veuillez remplir votre astuce')]
     private $content;
 
     #[ORM\Column(type: 'datetime')]
