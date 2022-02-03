@@ -41,11 +41,12 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'Vous devez accepter nos conditions.',
                     ]),
                 ],
             ])
             ->add('plainPassword', PasswordType::class, [
+                'error_bubbling' => true,
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,

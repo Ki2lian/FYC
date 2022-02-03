@@ -15,25 +15,24 @@
                             <div class="card-body p-4">
                                 <div class="text-center w-75 m-auto info">
                                     <h4 class="text-dark-50 mt-0 fw-bold">Connexion</h4>
-                                    <p class="text-muted mb-4">Connectez-vous pour accéder aux différents services</p>
+                                    <p class="text-muted mb-4">Connectez-vous pour accéder aux différentes fonctionnalités</p>
                                 </div>
                                 <form :action="pathLogin" method="post">
-                                    <!-- {% if form_errors(form) %}
-                                        <div class="alert alert-danger" role="alert">
-                                            {{ form_errors(form) }}
-                                        </div>
-                                    {% endif %} -->
+                                    <div v-if="error" class="alert alert-danger" role="alert">
+                                        Email ou mot de passe incorrect
+                                    </div>
                                     <div class="container mt-1 ms-1">
                                         <div class="mb-3">
                                             <label for="username">Email:</label>
-                                            <input type="text" id="username" name="_username" :value="lastusername" class="form-control border-bottom border-dark border-top-0 border-start-0 border-end-0 border-2" placeholder="email aléatoire" autocomplete="email" />
+                                            <input type="text" id="username" name="_username" :value="lastusername" required="required" class="form-control border-bottom border-dark border-top-0 border-start-0 border-end-0 border-2" placeholder="email aléatoire" autocomplete="email" />
                                         </div>
                                         <div class="mb-3">
                                             <label for="password">Password:</label>
-                                            <input type="password" id="password" name="_password" class="form-control border-bottom border-dark border-top-0 border-start-0 border-end-0 border-2" placeholder="mot de passe" autocomplete="off"/>
+                                            <input type="password" id="password" name="_password" required="required" class="form-control border-bottom border-dark border-top-0 border-start-0 border-end-0 border-2" placeholder="mot de passe" minlength="8" maxlength="4096" autocomplete="off"/>
                                         </div>
+                                        <input type="hidden" name="_csrf_token" :value="token">
                                         <div class="mb-3 text-center">
-                                            <button class="btn bg-interactive" type="submit">Se connecter</button>
+                                            <button class="btn bg-interactive" type="submit" name="connection">Se connecter</button>
                                         </div>
                                     </div>
                                 </form>
@@ -68,6 +67,10 @@ export default {
         error: {
             type: String,
             default: ""
+        },
+        token: {
+            type: String,
+            default: ""
         }
     },
     components: {
@@ -78,6 +81,10 @@ export default {
     },
 
 }
+
+$(document).ready(function(){
+
+});
 </script>
 
 <style lang="scss">

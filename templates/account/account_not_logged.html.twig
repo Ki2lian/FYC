@@ -3,5 +3,5 @@
 {% block title %}Inscription / connexion{% endblock %}
 
 {% block body %}
-    <account-log-in-sign-up form-register="{{ registrationForm }}" lastusername="{{ last_username }}" error="{{ error }}"></account-log-in-sign-up>
+    <account-log-in-sign-up form-register="{{ registrationForm }}" lastusername="{{ last_username }}" error="{{ error }}" token="{{ csrf_token('authenticate') }}"></account-log-in-sign-up>
 {% endblock %}

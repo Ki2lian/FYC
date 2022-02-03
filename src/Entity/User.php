@@ -13,6 +13,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @UniqueEntity(fields={"email"}, message="Il y a déjà un compte avec cet email")
+ * @UniqueEntity(fields={"pseudo"}, message="Il y a déjà un compte avec ce pseudo")
  */
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface

@@ -32,37 +32,43 @@ class AccountController extends AbstractController
     #[Route('/account', name: 'account')]
     public function account(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, AuthenticationUtils $authenticationUtils): Response
     {
-        $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
-        $registrationForm = $this->renderView('form/register.html.twig', ['form' => $form->createView()]);
 
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
+        if(!$this->getUser()){
+            $user = new User();
+            $form = $this->createForm(RegistrationFormType::class, $user);
+            $form->handleRequest($request);
+            $registrationForm = $this->renderView('form/register.html.twig', ['form' => $form->createView()]);
 
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-            $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
-
-            $entityManager->persist($user);
-            $entityManager->flush();
-            // do anything else you need here, like send an email
-
-            return $this->redirectToRoute('login');
+            //dd($request);
+    
+            // get the login error if there is one
+            $error = $authenticationUtils->getLastAuthenticationError();
+    
+            // last username entered by the user
+            $lastUsername = $authenticationUtils->getLastUsername();
+            if ($form->isSubmitted() && $form->isValid()) {
+                // encode the plain password
+                $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    )
+                );
+    
+                $entityManager->persist($user);
+                $entityManager->flush();
+                // do anything else you need here, like send an email
+    
+                return $this->redirectToRoute('account');
+            }
+    
+            return $this->render('account/account_not_logged.html.twig', [
+                'registrationForm' => $registrationForm,
+                'last_username' => $lastUsername,
+                'error'         => $error,
+            ]);
         }
-
-        return $this->render('account/account_not_logged.html.twig', [
-            'registrationForm' => $registrationForm,
-            'last_username' => $lastUsername,
-            'error'         => $error,
+        return $this->render('account/account_logged.html.twig', [
         ]);
     }
 

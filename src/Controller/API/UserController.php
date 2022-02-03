@@ -36,14 +36,12 @@ class UserController extends AbstractController
     #[Route('', name: 'api_edit_user', methods: ['PUT'])]
     public function editUser(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, UserRepository $ur): Response
     {
-        $isAjax = $request->isXMLHttpRequest();
-        if (!$isAjax) return new Response('', 404);
-
-        // $user = $this->getUser();
+        // $isAjax = $request->isXMLHttpRequest();
+        // if (!$isAjax) return new Response('', 404);
 
         // pour postman
-        // $user = $ur->find(1);
-        $user = $this->getUser();
+        $user = $ur->find(1);
+        // $user = $this->getUser();
         $form = $this->createForm(EditAccountType::class, $user, array('method' => 'PUT'));
         $form->handleRequest($request);
 
