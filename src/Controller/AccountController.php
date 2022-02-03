@@ -29,13 +29,19 @@ class AccountController extends AbstractController
         ]);
     }
 
-    #[Route('/register', name: 'register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    #[Route('/account', name: 'account')]
+    public function account(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, AuthenticationUtils $authenticationUtils): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
         $registrationForm = $this->renderView('form/register.html.twig', ['form' => $form->createView()]);
+
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
@@ -53,8 +59,10 @@ class AccountController extends AbstractController
             return $this->redirectToRoute('login');
         }
 
-        return $this->render('account/register.html.twig', [
+        return $this->render('account/account_not_logged.html.twig', [
             'registrationForm' => $registrationForm,
+            'last_username' => $lastUsername,
+            'error'         => $error,
         ]);
     }
 

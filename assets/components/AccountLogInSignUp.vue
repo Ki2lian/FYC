@@ -3,8 +3,45 @@
         <NavBar/>
         <div class="container mt-5">
             <div class="row justify-content-center">
-                <div class="col-xxl-6 col-lg-8">
+                <div class="col-xxl-6 col-lg-8 forms">
                     <div id="register" ref="formRegister"></div>
+                    <!-- {% if error %}
+                        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %} -->
+                    <div id="login">
+                        <div class="card card-form mt-5">
+                            <div class="card-header pb-3 bg-interactive"></div>
+                            <div class="border-form"></div>
+                            <div class="card-body p-4">
+                                <div class="text-center w-75 m-auto info">
+                                    <h4 class="text-dark-50 mt-0 fw-bold">Connexion</h4>
+                                    <p class="text-muted mb-4">Connectez-vous pour accéder aux différents services</p>
+                                </div>
+                                <form :action="pathLogin" method="post">
+                                    <!-- {% if form_errors(form) %}
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ form_errors(form) }}
+                                        </div>
+                                    {% endif %} -->
+                                    <div class="container mt-1 ms-1">
+                                        <div class="mb-3">
+                                            <label for="username">Email:</label>
+                                            <input type="text" id="username" name="_username" :value="lastusername" class="form-control border-bottom border-dark border-top-0 border-start-0 border-end-0 border-2" placeholder="email aléatoire" autocomplete="email" />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="password">Password:</label>
+                                            <input type="password" id="password" name="_password" class="form-control border-bottom border-dark border-top-0 border-start-0 border-end-0 border-2" placeholder="mot de passe" autocomplete="off"/>
+                                        </div>
+                                        <div class="mb-3 text-center">
+                                            <button class="btn bg-interactive" type="submit">Se connecter</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="border-form end-0"></div>
+                            <div class="card-footer bg-interactive pt-3"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -17,6 +54,18 @@ export default {
     name: "AccountLogInSignUp",
      props: {
         formRegister: {
+            type: String,
+            default: ""
+        },
+        pathLogin: {
+            type: String,
+            default: ""
+        },
+        lastusername: {
+            type: String,
+            default: ""
+        },
+        error: {
             type: String,
             default: ""
         }
@@ -42,10 +91,10 @@ $interactive_text: #5147C5;
     color: #fff;
 }
 
-#register .card .card-header{
+.forms .card .card-header{
     border-radius: 10px 10px 0px 0px;
 }
-#register .card .card-footer{
+.forms .card .card-footer{
     border-radius: 0px 0px 10px 10px;
 }
 
@@ -55,11 +104,19 @@ $interactive_text: #5147C5;
     border-radius: 10px;
 }
 
-.border-form{
+#register .border-form{
     background-color: #E4E4E4;
     width: 9px;
     position: absolute;
     height: 91.15%;
     top: 4.4%;
+}
+
+#login .border-form{
+    background-color: #E4E4E4;
+    width: 9px;
+    position: absolute;
+    height: 87%;
+    top: 6.5%;
 }
 </style>

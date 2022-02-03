@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription / connexion{% endblock %}
+
+{% block body %}
+    <account-log-in-sign-up form-register="{{ registrationForm }}" lastusername="{{ last_username }}" error="{{ error }}"></account-log-in-sign-up>
+{% endblock %}
