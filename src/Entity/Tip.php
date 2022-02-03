@@ -15,25 +15,25 @@ class Tip
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["data-tip","data-comment","data-rating", "data-astuces-search"])]
+    #[Groups(["data-tip","data-comment","data-rating", "data-astuces-search", "data-astuces-search-filter"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["data-tip","data-comment","data-rating", "data-astuces-search"])]
+    #[Groups(["data-tip","data-comment","data-rating", "data-astuces-search", "data-astuces-search-filter"])]
     #[Assert\NotBlank(message: 'Veuillez saisir un titre')]
     private $title;
 
     #[ORM\Column(type: 'text')]
-    #[Groups(["data-tip"])]
+    #[Groups(["data-tip", "data-astuces-search-filter"])]
     #[Assert\NotBlank(message: 'Veuillez remplir votre astuce')]
     private $content;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["data-tip"])]
+    #[Groups(["data-tip", "data-astuces-search-filter"])]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["data-tip"])]
+    #[Groups(["data-tip", "data-astuces-search-filter"])]
     private $updatedAt;
 
     #[ORM\OneToMany(mappedBy: 'tip', targetEntity: Comment::class, orphanRemoval: true)]
@@ -41,16 +41,16 @@ class Tip
     private $comments;
 
     #[ORM\OneToMany(mappedBy: 'tip', targetEntity: Rating::class, orphanRemoval: true)]
-    #[Groups(["data-tip"])]
+    #[Groups(["data-tip", "data-astuces-search-filter"])]
     private $ratings;
 
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'tips')]
-    #[Groups(["data-tip"])]
+    #[Groups(["data-tip", "data-astuces-search-filter"])]
     private $tag;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'tips')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["data-tip"])]
+    #[Groups(["data-tip", "data-astuces-search-filter"])]
     private $user;
 
     #[ORM\Column(type: 'boolean')]

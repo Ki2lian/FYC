@@ -10,11 +10,13 @@ import './styles/global.scss';
 import './styles/app.css';
 import Vue from 'vue'
 import Tag from './components/Tag.vue'
+import AccountLogInSignUp from './components/AccountLogInSignUp.vue'
 
 new Vue({ 
     el: '#app',
     components: {
-        Tag
+        Tag,
+        AccountLogInSignUp
     }
 })
 

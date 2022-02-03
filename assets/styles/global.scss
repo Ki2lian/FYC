@@ -1,1 +1,18 @@
 @import "~bootstrap/scss/bootstrap";
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap');
+
+/* COLORS */
+$background: #D8D8D8;
+$seconday_color: #EEEEEE;
+$interactive_text: #5147C5;
+$text: #272D2D;
+
+body {
+    color: $text;
+    font-family: 'Roboto Slab', serif;
+    background-color: $background;
+}
+
+#nav-bar {
+    height: 75px;
+}

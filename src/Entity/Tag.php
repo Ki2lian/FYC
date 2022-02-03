@@ -19,11 +19,11 @@ class Tag
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["data-tip","data-tag"])]
+    #[Groups(["data-tip","data-tag", "data-astuces-search-filter"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255, unique: true)]
-    #[Groups(["data-tip","data-tag"])]
+    #[Groups(["data-tip","data-tag", "data-astuces-search-filter"])]
     #[Assert\NotBlank(message: 'Veuillez saisir un nom')]
     private $name;
 

@@ -35,6 +35,7 @@ class AccountController extends AbstractController
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
+        $registrationForm = $this->renderView('form/register.html.twig', ['form' => $form->createView()]);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
@@ -53,7 +54,7 @@ class AccountController extends AbstractController
         }
 
         return $this->render('account/register.html.twig', [
-            'registrationForm' => $form->createView(),
+            'registrationForm' => $registrationForm,
         ]);
     }
 

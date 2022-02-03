@@ -21,14 +21,31 @@ class TipRepository extends ServiceEntityRepository
 
     public function search($q){
         return $this->createQueryBuilder('t')
-        ->where('t.title LIKE :q')->setParameter('q', '%'.$q.'%')
-        ->orWhere('t.content LIKE :q')->setParameter('q', '%'.$q.'%')
-        ->andWhere('t.isValid = 1')
-        ->orderBy('t.id', 'DESC')
-        ->getQuery()
-        ->setMaxResults(10)
-        ->setFirstResult(0)
-        ->getResult();
+                    ->where('t.title LIKE :q')->setParameter('q', '%'.$q.'%')
+                    ->orWhere('t.content LIKE :q')->setParameter('q', '%'.$q.'%')
+                    ->andWhere('t.isValid = 1')
+                    ->orderBy('t.id', 'DESC')
+                    ->getQuery()
+                    ->setMaxResults(10)
+                    ->setFirstResult(0)
+                    ->getResult()
+        ;
+    }
+
+    public function tipByTag($tags, $skip, $fetch){
+        $countTags = sizeof($tags);
+        return $this->createQueryBuilder('tip')
+                    ->join('tip.tag', 'tag')
+                    ->where('tag.name in (:tags)')->setParameter('tags', $tags)
+                    ->andWhere('tip.isValid = 1')
+                    ->groupBy('tip.id')
+                    ->having("count(tip) >= $countTags")
+                    ->orderBy('tip.id', 'DESC')
+                    ->setMaxResults($fetch)
+                    ->setFirstResult($skip)
+                    ->getQuery()
+                    ->getResult()
+        ;
     }
     // /**
     //  * @return Tip[] Returns an array of Tip objects
