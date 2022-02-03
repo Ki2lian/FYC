@@ -15,15 +15,15 @@
 		<div class="container mt-1 ms-1">
 			<div class="mb-3">
                 {{ form_label(form.pseudo, 'Pseudonyme', { 'label_attr': {'class': 'form-label'} }) }}
-                {{ form_widget(form.pseudo, {'attr': {'class': 'form-control border-bottom border-dark border-top-0 border-start-0 border-end-0 border-2','placeholder': 'Pseudonyme', 'autocomplete': 'pseudo'}}) }}
+                {{ form_widget(form.pseudo, {'attr': {'class': 'form-control border-bottom border-dark border-top-0 border-start-0 border-end-0 border-2','placeholder': 'Exemple: '~ pseudo, 'autocomplete': 'pseudo'}}) }}
             </div>
             <div class="mb-3">
                 {{ form_label(form.email, 'Email', { 'label_attr': {'class': 'form-label'} }) }}
-                {{ form_widget(form.email, {'attr': {'class': 'form-control border-bottom border-dark border-top-0 border-start-0 border-end-0 border-2','placeholder': 'Email', 'autocomplete': 'email'}}) }}
+                {{ form_widget(form.email, {'attr': {'class': 'form-control border-bottom border-dark border-top-0 border-start-0 border-end-0 border-2','placeholder': 'Exemple: '~ email, 'autocomplete': 'email'}}) }}
             </div>
 			<div class="mb-3">
 				{{ form_label(form.plainPassword, 'Mot de passe', { 'label_attr': {'class': 'form-label'} }) }}
-				{{ form_widget(form.plainPassword, {'attr': {'class': 'form-control border-bottom border-dark border-top-0 border-start-0 border-end-0 border-2','placeholder': 'Mot de passe', 'minlength': 8, 'maxlength':4096, 'autocomplete': 'off'}}) }}
+				{{ form_widget(form.plainPassword, {'attr': {'class': 'form-control border-bottom border-dark border-top-0 border-start-0 border-end-0 border-2','placeholder': 'Exemple: '~ password, 'minlength': 8, 'maxlength':4096, 'autocomplete': 'off'}}) }}
 			</div>
 			<div class="mb-3">
 				{{ form_widget(form.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}

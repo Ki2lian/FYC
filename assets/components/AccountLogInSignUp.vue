@@ -5,9 +5,6 @@
             <div class="row justify-content-center">
                 <div class="col-xxl-6 col-lg-8 forms">
                     <div id="register" ref="formRegister"></div>
-                    <!-- {% if error %}
-                        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                    {% endif %} -->
                     <div id="login">
                         <div class="card card-form mt-5">
                             <div class="card-header pb-3 bg-interactive"></div>
@@ -19,16 +16,16 @@
                                 </div>
                                 <form :action="pathLogin" method="post">
                                     <div v-if="error" class="alert alert-danger" role="alert">
-                                        Email ou mot de passe incorrect
+                                        <span>Email ou mot de passe incorrect</span>
                                     </div>
                                     <div class="container mt-1 ms-1">
                                         <div class="mb-3">
                                             <label for="username">Email:</label>
-                                            <input type="text" id="username" name="_username" :value="lastusername" required="required" class="form-control border-bottom border-dark border-top-0 border-start-0 border-end-0 border-2" placeholder="email aléatoire" autocomplete="email" />
+                                            <input type="text" id="username" name="_username" :value="lastusername" required="required" class="form-control border-bottom border-dark border-top-0 border-start-0 border-end-0 border-2" :placeholder="email" autocomplete="email" />
                                         </div>
                                         <div class="mb-3">
                                             <label for="password">Password:</label>
-                                            <input type="password" id="password" name="_password" required="required" class="form-control border-bottom border-dark border-top-0 border-start-0 border-end-0 border-2" placeholder="mot de passe" minlength="8" maxlength="4096" autocomplete="off"/>
+                                            <input type="password" id="password" name="_password" required="required" class="form-control border-bottom border-dark border-top-0 border-start-0 border-end-0 border-2" :placeholder="password" minlength="8" maxlength="4096" autocomplete="off"/>
                                         </div>
                                         <input type="hidden" name="_csrf_token" :value="token">
                                         <div class="mb-3 text-center">
@@ -69,6 +66,14 @@ export default {
             default: ""
         },
         token: {
+            type: String,
+            default: ""
+        },
+        email: {
+            type: String,
+            default: ""
+        },
+        password: {
             type: String,
             default: ""
         }

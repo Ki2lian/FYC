@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Faker\Factory;
 
 class AccountController extends AbstractController
 {
@@ -37,9 +38,17 @@ class AccountController extends AbstractController
             $user = new User();
             $form = $this->createForm(RegistrationFormType::class, $user);
             $form->handleRequest($request);
-            $registrationForm = $this->renderView('form/register.html.twig', ['form' => $form->createView()]);
 
-            //dd($request);
+            $faker = Factory::create('fr_FR');
+            $pseudo = $faker->userName();
+            $password = $faker->password(8);
+            $registrationForm = $this->renderView('form/register.html.twig', [
+                'form' => $form->createView(),
+                'pseudo' => $pseudo,
+                'email' => "$pseudo@fyc.fr",
+                'password' => $password
+            ]);
+
     
             // get the login error if there is one
             $error = $authenticationUtils->getLastAuthenticationError();
@@ -66,6 +75,8 @@ class AccountController extends AbstractController
                 'registrationForm' => $registrationForm,
                 'last_username' => $lastUsername,
                 'error'         => $error,
+                'email' => "$pseudo@fyc.fr",
+                'password' => $password
             ]);
         }
         return $this->render('account/account_logged.html.twig', [
