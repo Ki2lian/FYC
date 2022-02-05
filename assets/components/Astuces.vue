@@ -119,14 +119,32 @@ $background: #D8D8D8;
 //main container
 .block {
     &__first {
-        height: 620px;
+        // height temporaire
+        @media (max-width: 768px) {
+            height: 450px;
+        }
+        @media (min-width: 768px) {
+            height: 450px;
+        }
+        @media (min-width: 992px) {
+            height: 620px;
+        }
+        @media (min-width: 1200px) {
+            height: 740px;
+        }
+        @media (min-width: 1800px) {
+            height: 900px;
+        }
+        
         background-image: url("../img/background.png");
         background-size: 100%;
         background-repeat: no-repeat;
+        background-color: rgb(125, 126, 128);
     }
 
     &__second {
         margin: 50px;
+        margin-top: 20px;
     }
 }
 

@@ -12,11 +12,13 @@ import vuetify from "./plugins/vuetify.js"
 
 import Vue from 'vue'
 import Astuces from "./components/Astuces.vue"
+import Profil from "./components/Profil.vue"
 
 new Vue({ 
     el: '#app', 
     components: {
         Astuces,
+        Profil,
     },
     vuetify,
 })
