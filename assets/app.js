@@ -8,15 +8,20 @@
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/global.scss';
 import './styles/app.css';
+import vuetify from "./plugins/vuetify.js"
 import Vue from 'vue'
 import NavBar from "./components/NavBar.vue"
 import FooterVue from "./components/FooterVue.vue"
+import Astuces from "./components/Astuces.vue"
+import Block from "./components/Block.vue"
 
 new Vue({ 
     el: '#app', 
     components: {
         FooterVue,
         NavBar,
+        Astuces,
+        Block,
     }
 })
 
