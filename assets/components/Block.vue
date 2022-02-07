@@ -90,6 +90,14 @@ $text: #b2b2b2;
         left: 51%;
         transform: translate(-50%);
 
+        @media only screen and (max-width: 1540px) {
+          top: 138px;
+          font-size: 10px;
+          width: 650px;
+          height: 10px;
+          left: 53%;
+        }
+
         .card {
           background-color: #494949;
           border-color: #494949;
@@ -99,22 +107,38 @@ $text: #b2b2b2;
           margin-inline: 40px;
           top: 60px;
 
+          @media only screen and (max-width: 1540px) {
+            height: 100px;
+          }
+
           .vector {
             position: absolute;
             left: 50%;
             top: -30px;
             transform: translate(-50%);
             width: 33px;
+
+            @media only screen and (max-width: 1540px) {
+              width: 18px;
+            }
           }
 
           h1 {
             font-size: 18px;
             text-align: center;
             color: $seconday_color;
+
+            @media only screen and (max-width: 1540px) {
+              font-size: 10px;
+            }
           }
 
           p {
             color: $text;
+
+            @media only screen and (max-width: 1540px) {
+              font-size: 8px;
+            }
           }
         }
       }
@@ -126,6 +150,10 @@ $text: #b2b2b2;
         top: 60px;
         transform: translate(-50%);
         color: $seconday_color;
+
+        @media only screen and (max-width: 1540px) {
+          font-size: 14px;
+        }
       }
 
       .text {
@@ -138,10 +166,15 @@ $text: #b2b2b2;
         left: 50%;
         transform: translate(-50%);
         position: absolute;
-      }
 
-      span {
-        color: $seconday_color;
+        @media only screen and (max-width: 1540px) {
+          top: 80px;
+          font-size: 12px;
+        }
+
+        span {
+          color: $seconday_color;
+        }
       }
 
       .btn {
@@ -152,6 +185,10 @@ $text: #b2b2b2;
         position: absolute;
         top: 210px;
 
+        @media only screen and (max-width: 1540px) {
+          top: 120px;
+        }
+
         a {
           width: 25%;
           border-radius: 15px;
@@ -160,6 +197,11 @@ $text: #b2b2b2;
           padding: 5px;
           padding-inline: 40px;
           text-decoration: none;
+
+          @media only screen and (max-width: 1540px) {
+            width: 10%;
+            font-size: 10px;
+          }
         }
       }
     }
