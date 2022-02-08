@@ -41,12 +41,27 @@
         </div>
       </div>
     </div>
+
+    <div v-on:click="scrollTop" class="btn__arrow" >
+      <img class="icon" src="../assets/arrows.svg" alt="arrow up">
+    </div>
+
   </div>
 </template>
 
 <script>
 export default {
   name: "block",
+
+  methods: {
+    scrollTop() {
+        window.scroll({
+          top: 0,
+          left: 0,
+          behavior: 'smooth'
+        })    
+    }
+  },
 };
 </script>
 
@@ -64,6 +79,25 @@ $text: #b2b2b2;
   align-items: center;
   position: relative;
 
+  .btn__arrow{
+    z-index: 2;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    right: -10px;
+    bottom: -10px ;
+    cursor: pointer;
+
+    .icon{
+      width: 50px;
+    }
+
+  }
+
   .container {
     .img-block {
       width: 90%;
@@ -73,7 +107,6 @@ $text: #b2b2b2;
       z-index: 1;
       position: relative;
     }
-
     .contenu {
       margin: 0 auto;
       width: 100%;
@@ -83,13 +116,11 @@ $text: #b2b2b2;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-
       .card__container {
         position: absolute;
         top: 270px;
         left: 51%;
         transform: translate(-50%);
-
         @media only screen and (max-width: 1540px) {
           top: 138px;
           font-size: 10px;
@@ -97,7 +128,6 @@ $text: #b2b2b2;
           height: 10px;
           left: 53%;
         }
-
         .card {
           background-color: #494949;
           border-color: #494949;
@@ -106,43 +136,35 @@ $text: #b2b2b2;
           width: 350px;
           margin-inline: 40px;
           top: 60px;
-
           @media only screen and (max-width: 1540px) {
             height: 100px;
           }
-
           .vector {
             position: absolute;
             left: 50%;
             top: -30px;
             transform: translate(-50%);
             width: 33px;
-
             @media only screen and (max-width: 1540px) {
               width: 18px;
             }
           }
-
           h1 {
             font-size: 18px;
             text-align: center;
             color: $seconday_color;
-
             @media only screen and (max-width: 1540px) {
               font-size: 10px;
             }
           }
-
           p {
             color: $text;
-
             @media only screen and (max-width: 1540px) {
               font-size: 8px;
             }
           }
         }
       }
-
       .title {
         z-index: 2;
         position: absolute;
@@ -150,12 +172,10 @@ $text: #b2b2b2;
         top: 60px;
         transform: translate(-50%);
         color: $seconday_color;
-
         @media only screen and (max-width: 1540px) {
           font-size: 14px;
         }
       }
-
       .text {
         max-width: 800px;
         text-align: center;
@@ -166,17 +186,14 @@ $text: #b2b2b2;
         left: 50%;
         transform: translate(-50%);
         position: absolute;
-
         @media only screen and (max-width: 1540px) {
           top: 80px;
           font-size: 12px;
         }
-
         span {
           color: $seconday_color;
         }
       }
-
       .btn {
         z-index: 2;
         justify-content: center;
@@ -184,11 +201,9 @@ $text: #b2b2b2;
         transform: translate(-50%);
         position: absolute;
         top: 210px;
-
         @media only screen and (max-width: 1540px) {
           top: 120px;
         }
-
         a {
           width: 25%;
           border-radius: 15px;
@@ -197,7 +212,6 @@ $text: #b2b2b2;
           padding: 5px;
           padding-inline: 40px;
           text-decoration: none;
-
           @media only screen and (max-width: 1540px) {
             width: 10%;
             font-size: 10px;
