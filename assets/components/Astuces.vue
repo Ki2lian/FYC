@@ -91,6 +91,21 @@ export default {
         //init first page
         this.actualCards = this.sliceAllCards[0]
         console.log(this.actualCards);
+
+        // hide container filter if user wants to see menu items
+        const filter = document.querySelector(".container__filter")
+        const navbarToggler = document.querySelector(".navbar-toggler-icon")
+        navbarToggler.addEventListener("click", () => {
+            
+            if(filter.classList.contains("hide")) {
+                setTimeout(()=>{
+                    filter.classList.toggle("hide")
+                },250)
+            }
+            else {
+                filter.classList.toggle("hide")
+            }
+        })
     },
 
     methods: {
@@ -200,6 +215,10 @@ $background: #D8D8D8;
             color: $seconday_color;
         }
     }
+}
+
+.hide {
+    opacity: 0;
 }
 
 </style>

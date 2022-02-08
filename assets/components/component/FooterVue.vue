@@ -1,5 +1,6 @@
 <template>
   <div class="footer py-5">
+    <button @click="goToTop" class="btn__top"><img src="../../img/top_arrow.svg" alt=""></button>
     <div class="row">
       <div class="col-6 col-md">
         <h5>FYC.</h5>
@@ -61,6 +62,14 @@
 <script>
 export default {
   name: "FooterVue",
+
+  methods: {
+
+    goToTop() {
+      document.body.scrollTop = 0; // Safari
+      document.documentElement.scrollTop = 0; // Chrome, Firefox, IE and Opera
+    },
+  },
 }
 </script>
 
@@ -74,6 +83,7 @@ $background_color: #494949;
 .footer{
 
   background: $background_color;
+  padding-top: 0 !important;
 
   .footer-desc{
     color: #747474;
@@ -106,6 +116,14 @@ $background_color: #494949;
   small{
     color: #A8A8A8;
   }
+}
+
+.btn__top {
+  display: flex;
+  margin: 0 auto;
+  transform: translateY(-15px);
+  background-color: $interactive_text;
+  border-radius: 50%;
 }
 
 .col-md{
