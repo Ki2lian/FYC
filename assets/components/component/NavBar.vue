@@ -1,51 +1,64 @@
 <template>
-    <div class="row" id="nav-bar">
-        <div class="col-1 d-flex align-items-center justify-content-center"><div class="logo">FYC.</div></div>
-        <div class="col-8 d-inline-flex align-items-center menus">
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuAstuces" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Astuces
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuAstuces">
-                    <a class="dropdown-item" href="#">Toutes les astuces</a>
-                    <a class="dropdown-item" href="#">Rechercher une astuce</a>
-                </div>
-            </div>
-
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuItems" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Items
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuItems">
-                    <a class="dropdown-item" href="#">Item 1</a>
-                    <a class="dropdown-item" href="#">Item 2</a>
-                </div>
-            </div>
-
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuProfil" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Profil
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuProfil">
-                    <a class="dropdown-item" href="#">Voir</a>
-                    <a class="dropdown-item" href="#">Modifier</a>
-                </div>
+  <div>
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <div class="logo">FYC.</div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav me-auto mb-lg-0">
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuAstuces" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Astuces
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuAstuces">
+                                <a class="dropdown-item" href="#">Toutes les astuces</a>
+                                <a class="dropdown-item" href="#">Rechercher une astuce</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuItems" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Items
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuItems">
+                                <a class="dropdown-item" href="#">Item 1</a>
+                                <a class="dropdown-item" href="#">Item 2</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuProfil" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Profil
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuProfil">
+                                <a class="dropdown-item" href="#">Voir</a>
+                                <a class="dropdown-item" href="#">Modifier</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                     <input class="search__input" type="text" placeholder="Rechercher...">
+                     <button class="btn btn-outline-success" type="submit">Rechercher</button>
+                     <!-- Bouton de validation à changer/enlever -->
+                </form>
             </div>
         </div>
-        <div class="col-3 d-flex justify-content-center align-items-center">
-            <input class="search__input" type="text" placeholder="Rechercher...">
-        </div>
-   </div>
+    </nav>
+  </div>
 </template>
-<script>
-   export default {
-       name: "navbar",
 
-       mounted() {
-           
-       }
-   }
+<script>
+export default {
+
+}
 </script>
+
 <style lang="scss" scoped>
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap');
 
@@ -61,7 +74,11 @@ $seconday_color: #EEEEEE;
 }
 
 .logo {
-    font-size: 24px;
+    @media (max-width: 768px) {
+        font-size: 16px;
+    }
+    font-size: 32px;
+    margin-right: 5%;
 }
 
 .menus {
@@ -73,6 +90,9 @@ $seconday_color: #EEEEEE;
 }
 
 button {
+    @media (max-width: 768px) {
+        font-size: 16px;
+    }
     background-color: transparent;
     color: $text;
     border: none;
