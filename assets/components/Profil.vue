@@ -34,13 +34,11 @@
 <script>
 import NavBar from "./component/NavBar.vue"
 import Footer from "./component/FooterVue.vue"
-
 export default {
     components: {
         NavBar,
         Footer,
     },
-
     data () {
         return {
             headers: [
@@ -140,13 +138,9 @@ export default {
             ],
         }
     },
-
     mounted() {
-
     },
-
     methods: {
-
     },
 }
 </script>
@@ -157,15 +151,12 @@ $light_text: #383d3d;
 $interactive_text: #5147C5;
 $seconday_color: #EEEEEE;
 $background: #D8D8D8;
-
 .temporary {
     margin: 100px;
 }
-
 .container__profil {
     background-color: $background;
 }
-
 .block {
     &__first {
         // height temporaire
@@ -191,7 +182,6 @@ $background: #D8D8D8;
         background-color: rgb(125, 126, 128);
     }
 }
-
 .title {
     font-size: 64px;
     margin: 0 auto;
@@ -200,7 +190,6 @@ $background: #D8D8D8;
     line-height: 100%;
     text-align: center;
     margin-top: 15%;
-
     & .first {
         padding-right: 20vw;
     }
@@ -208,7 +197,6 @@ $background: #D8D8D8;
         font-size: 32px;
     }
 }
-
 .welcome {
     font-size: 46px;
     @media (max-width: 768px) {
@@ -217,7 +205,6 @@ $background: #D8D8D8;
     margin: 2%;
     margin-left: 5%;
 }
-
 .personnal-information {
     width: 50%;
     @media (max-width: 768px) {
@@ -229,8 +216,6 @@ $background: #D8D8D8;
     box-shadow: 5px 5px 4px rgba(83, 83, 83, 0.25);
     border-radius: 10px;
 }
-
-
 .icon {
     &__user {
         margin-left: 9px;
@@ -241,7 +226,6 @@ $background: #D8D8D8;
             width: 30px;
         }
     }
-
     &__mail {
         width: 75px;
         height: auto;
@@ -249,18 +233,15 @@ $background: #D8D8D8;
             width: 32.5px;
         }
     }
-
     &__commentaire,
     &__astuce {
         width: 30%;
     }
 }
-
 .infos {
     &__block {
         text-align: center;
     }
-
     &__child {
         display: flex;
         flex-direction: column;
@@ -271,7 +252,6 @@ $background: #D8D8D8;
             font-size: 16px;
         }
     }
-
     &__tags {
         background: #FFFFFF;
         box-shadow: 4px 4px 7px rgba(0, 0, 0, 0.25);
@@ -281,7 +261,6 @@ $background: #D8D8D8;
     }
     
 }
-
 .data_users {
     width: 80%;
     margin: 0 auto;

@@ -42,7 +42,9 @@
                 @input="onPageChange" color="rgba(81, 71, 197, 1)"
             ></v-pagination>
         </div>
+        
         <Footer />
+
     </div>
 </template>
 
@@ -50,19 +52,15 @@
 import NavBar from "./component/NavBar.vue"
 import Card from "./component/Card.vue"
 import Footer from "./component/FooterVue.vue"
-
 export default {
     data() {
         return {
-
             // TAGS DATA
             selectedTag: null,
             optionsTags: ["Option 1","Option 2","Option 3"],
             // 
-
             textSearch: null,
             checkbox__note: false,
-
             //cards
             page: 1,
             cards: ["Card 1","Card 2","Card 3","Card 4",
@@ -75,15 +73,12 @@ export default {
             nombreCartesVisible: 12,
         }
     },
-
     components: {
         NavBar,
         Card,
         Footer,
     },
-
     mounted() {
-
         for(let i = 0; i < this.cards.length; i+= this.nombreCartesVisible) {
             const index = i + this.nombreCartesVisible
             this.sliceAllCards.push(this.cards.slice(i, index))
@@ -91,7 +86,6 @@ export default {
         //init first page
         this.actualCards = this.sliceAllCards[0]
         console.log(this.actualCards);
-
         // hide container filter if user wants to see menu items
         const filter = document.querySelector(".container__filter")
         const navbarToggler = document.querySelector(".navbar-toggler-icon")
@@ -107,30 +101,24 @@ export default {
             }
         })
     },
-
     methods: {
-
         checkSearch() {
             console.log("on check search");
         },
-
         onPageChange() {
             this.actualCards = this.sliceAllCards[this.page-1]
         }
     }
-
 }
 </script>
 
 <style lang="scss" scoped>
-
 // COLORS
 $text: #272D2D;
 $light_text: #383d3d;
 $interactive_text: #5147C5;
 $seconday_color: #EEEEEE;
 $background: #D8D8D8;
-
 //main container
 .block {
     &__first {
@@ -156,13 +144,11 @@ $background: #D8D8D8;
         background-repeat: no-repeat;
         background-color: rgb(125, 126, 128);
     }
-
     &__second {
         margin: 50px;
         margin-top: 20px;
     }
 }
-
 .container{
     &__filter {
     width: 75%;
@@ -172,20 +158,16 @@ $background: #D8D8D8;
     border-radius: 10px;
     padding: 50px;
     }
-
     &__search {
         border-radius: 10px;
-
         & .selector {
             display: flex;
             border-radius: 10px;
             height: 50px;
-
             & .select_search {
                 border: 1px solid #CECECE;
                 border-radius: 10px 0px 0px 10px;
             }
-
             & input[type=text] {
                 background-color: $seconday_color;
                 width: 100%;
@@ -193,20 +175,17 @@ $background: #D8D8D8;
                 border-radius: 0px 10px 10px 0px;
                 box-shadow: 3px 3px 2px -2px rgba(0, 0, 0, 30%);
                 
-
                 &::placeholder {
                     padding-left: 10px;
                     color: $text;
                 }
             }
         }
-
         & input[type=date] {
             border: 2px solid $text;
             border-radius: 10px;
             padding: 5px;
         }
-
         & input[type=submit] {
             border: 2px solid $text;
             border-radius: 10px;
@@ -216,9 +195,7 @@ $background: #D8D8D8;
         }
     }
 }
-
 .hide {
     opacity: 0;
 }
-
 </style>

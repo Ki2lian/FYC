@@ -9,12 +9,13 @@
 import './styles/global.scss';
 import './styles/app.css';
 import vuetify from "./plugins/vuetify.js"
-
 import Vue from 'vue'
 import Astuces from "./components/Astuces.vue"
 import Profil from "./components/Profil.vue"
 import Tag from './components/Tag.vue'
 import AccountLogInSignUp from './components/AccountLogInSignUp.vue'
+import Accueil from "./components/Accueil.vue"
+import UneAstuce from "./components/UneAstuce.vue"
 
 new Vue({ 
     el: '#app', 
@@ -22,7 +23,9 @@ new Vue({
         Astuces,
         Profil,
         Tag,
-        AccountLogInSignUp
+        AccountLogInSignUp,
+        Accueil,
+        UneAstuce,
     },
     vuetify,
 })
