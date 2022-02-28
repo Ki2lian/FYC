@@ -1,7 +1,7 @@
 <template>
   <div class="block">
     <div class="container">
-      <img class="img-block" src="../assets/block_home.svg" alt="img_block" />
+      <img class="img-block" src="../../img/block_home.svg" alt="img_block" />
       <div class="contenu">
         <h1 class="title">FYC.</h1>
         <p class="text">
@@ -14,7 +14,7 @@
         </div>
         <div class="card__container row">
           <div class="card col">
-            <img class="vector" src="../assets/Vector.svg" alt="vector" />
+            <img class="vector" src="../../img/Vector.svg" alt="vector" />
             <h1>Augmentation de la productivité</h1>
             <p>
               Si quelqu'un quelque part a la bonne réponse, tout à coup, vous
@@ -22,7 +22,7 @@
             </p>
           </div>
           <div class="card col">
-            <img class="vector" src="../assets/Vector.svg" alt="vector" />
+            <img class="vector" src="../../img/Vector.svg" alt="vector" />
             <h1>Collectif</h1>
             <p>
               Aide à trouver des réponses fiables plus rapidement, à dialoguer
@@ -31,7 +31,7 @@
             </p>
           </div>
           <div class="card col">
-            <img class="vector" src="../assets/Vector.svg" alt="vector" />
+            <img class="vector" src="../../img/Vector.svg" alt="vector" />
             <h1>Intéractif</h1>
             <p>
               Favorise l'échange entre les utilisatuers et l'outil, donc entre
@@ -41,27 +41,12 @@
         </div>
       </div>
     </div>
-
-    <div v-on:click="scrollTop" class="btn__arrow" >
-      <img class="icon" src="../assets/arrows.svg" alt="arrow up">
-    </div>
-
   </div>
 </template>
 
 <script>
 export default {
   name: "block",
-
-  methods: {
-    scrollTop() {
-        window.scroll({
-          top: 0,
-          left: 0,
-          behavior: 'smooth'
-        })    
-    }
-  },
 };
 </script>
 
@@ -73,30 +58,12 @@ $text: #b2b2b2;
 
 .block {
   margin: 0 auto;
+  margin-block: 80px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
-
-  .btn__arrow{
-    z-index: 2;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    right: -10px;
-    bottom: -10px ;
-    cursor: pointer;
-
-    .icon{
-      width: 50px;
-    }
-
-  }
 
   .container {
     .img-block {

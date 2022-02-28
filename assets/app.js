@@ -10,19 +10,20 @@ import './styles/global.scss';
 import './styles/app.css';
 import vuetify from "./plugins/vuetify.js"
 import Vue from 'vue'
-import NavBar from "./components/NavBar.vue"
-import FooterVue from "./components/FooterVue.vue"
 import Astuces from "./components/Astuces.vue"
-import Block from "./components/Block.vue"
+import Profil from "./components/Profil.vue"
+import Accueil from "./components/Accueil.vue"
+import UneAstuce from "./components/UneAstuce.vue"
 
 new Vue({ 
     el: '#app', 
     components: {
-        FooterVue,
-        NavBar,
         Astuces,
-        Block,
-    }
+        Profil,
+        Accueil,
+        UneAstuce,
+    },
+    vuetify,
 })
 
 require('bootstrap');
