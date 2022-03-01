@@ -25,6 +25,52 @@
       <hr class="trait my-4">
     </div>
 
+    <div class="body-container">
+        <div class="astuce">
+          <p class="astuce-text">
+            Thalassius vero ea tempestate praefectus praetorio praesens 
+            ipse quoque adrogantis ingenii, considerans incitationem eius ad 
+            multorum augeri discrimina, non maturitate vel consiliis mitigabat, ut 
+            aliquotiens celsae potestates iras principum molliverunt, 
+            sed adversando iurgandoque cum parum congrueret,
+             eum ad rabiem potius evibrabat, 
+             Augustum actus eius exaggerando creberrime docens, 
+             idque, incertum qua mente, ne lateret adfectans. quibus mox Caesar acrius efferatus,
+             velut contumaciae quoddam vexillum altius erigens, 
+             sine respectu salutis alienae vel suae ad vertenda opposita instar rapidi fluminis irrevocabili impetu ferebatur.
+            Intellectum est enim mihi quidem in multis, et maxime in me ipso,
+            sed paulo ante in omnibus, cum M. Marcellum senatui reique publicae 
+            concessisti, commemoratis praesertim offensionibus, te auctoritatem huius 
+            ordinis dignitatemque rei publicae tuis vel doloribus vel suspicionibus 
+            anteferre. Ille quidem fructum omnis ante actae vitae hodierno die maximum 
+            cepit, cum summo consensu senatus, tum iudicio tuo gravissimo et maximo. Ex quo profecto intellegis quanta in dato beneficio sit laus, cum in accepto sit tanta gloria.
+            </p>
+        </div>
+    </div>
+
+    <div class="commentaire">
+      <div class="container">
+        <p>Votre commentaire :</p>
+
+        <editor
+       api-key="no-api-key"
+       :init="{
+         height: 500,
+         menubar: true,
+         plugins: [
+           'advlist autolink lists link image charmap print preview anchor',
+           'searchreplace visualblocks code fullscreen',
+           'insertdatetime media table paste code help wordcount'
+         ],
+         toolbar:
+           'undo redo | formatselect | bold italic backcolor | \
+           alignleft aligncenter alignright alignjustify | \
+           bullist numlist outdent indent | removeformat | help'
+       }"
+     />
+      </div>
+    </div>
+
     <Footer />
   </div>
 </template>
@@ -32,12 +78,15 @@
 <script>
 import NavBar from "./component/NavBar.vue";
 import Footer from "./component/FooterVue.vue";
+import Editor from '@tinymce/tinymce-vue'
 
 export default {
   components: {
     NavBar,
     Footer,
+    'editor': Editor,
   },
+  
 };
 </script>
 
@@ -85,6 +134,22 @@ $text: #b2b2b2;
         left: 10px;
         position: relative;
     }
+  }
+
+  .body-container{
+    margin: 0 auto;
+    width: 70%; 
+
+    .astuce{
+      .astuce-text{
+        margin-left: auto;
+        margin-right: auto;
+        text-align: justify;
+      }
+    }
+  }
+
+  .commentaire{
   }
 }
 </style>
