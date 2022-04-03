@@ -25,6 +25,13 @@ class TipController extends AbstractController
         return $this->json(["code" => 403, "message" => "Access Denied"], 403);
     }
 
+    #[Route('s/{token}', name: 'api_all_tags', methods: ['GET'])]
+    public function allTips(TipRepository $tr, string $token): Response
+    {
+        if ($token === $_ENV['API_TOKEN']) return $this->json($tr->findBy(array(), array('id' => 'DESC')), 200, [], ['groups' => "data-tip"]);
+        return $this->json(["code" => 403, "message" => "Access Denied"], 403);
+    }
+
     #[Route('/{token}/{id}', name: 'api_tip', methods: ['GET'])]
     public function tip(TipRepository $tr, string $token, $id = 0): Response
     {

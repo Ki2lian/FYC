@@ -8,6 +8,7 @@
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/global.scss';
 import './styles/app.css';
+import './styles/passtrength.css'
 import vuetify from "./plugins/vuetify.js"
 import Vue from 'vue'
 import Astuces from "./components/Astuces.vue"
@@ -16,7 +17,9 @@ import Tag from './components/Tag.vue'
 import AccountLogInSignUp from './components/AccountLogInSignUp.vue'
 import Accueil from "./components/Accueil.vue"
 import UneAstuce from "./components/UneAstuce.vue"
-
+import VueTypedJs from 'vue-typed-js'
+Vue.use(VueTypedJs)
+Vue.filter('pluralize', (word, amount) => (amount > 1) ? `${word}s` : word)
 new Vue({ 
     el: '#app', 
     components: {

@@ -23,7 +23,7 @@ class Tag
     private $id;
 
     #[ORM\Column(type: 'string', length: 255, unique: true)]
-    #[Groups(["data-tip","data-tag", "data-astuces-search-filter"])]
+    #[Groups(["data-tip","data-tag", "data-astuces-search-filter", "data-tip"])]
     #[Assert\NotBlank(message: 'Veuillez saisir un nom')]
     private $name;
 

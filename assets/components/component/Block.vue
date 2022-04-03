@@ -5,12 +5,12 @@
       <div class="contenu">
         <h1 class="title">FYC.</h1>
         <p class="text">
-          <span>Capturez les connaissances et les solutions pour </span>ébloquer
+          <span>Capturez les connaissances et les solutions pour </span>débloquer
           votre développement <span>et</span> partager vos astuces au monde en
           entier.
         </p>
         <div class="btn">
-          <a href="#">Faire un tour des astuces</a>
+          <a href="#" ref="urlAllTips">Faire un tour des astuces</a>
         </div>
         <div class="card__container row">
           <div class="card col">
@@ -47,6 +47,15 @@
 <script>
 export default {
   name: "block",
+  props: {
+    urlalltips: {
+        type: String,
+        default: ""
+    },
+  },
+  mounted() {
+      this.$refs.urlAllTips.href = this.urlalltips
+    }
 };
 </script>
 

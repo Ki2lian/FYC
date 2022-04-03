@@ -24,6 +24,13 @@ class TagController extends AbstractController
         return $this->json(["code" => 403, "message" => "Access Denied"], 403);
     }
 
+    #[Route('s/{token}', name: 'api_all_tags', methods: ['GET'])]
+    public function allTags(TagRepository $tr, string $token): Response
+    {
+        if ($token === $_ENV['API_TOKEN']) return $this->json($tr->findBy(array(), array('id' => 'DESC')), 200, [], ['groups' => "data-tag"]);
+        return $this->json(["code" => 403, "message" => "Access Denied"], 403);
+    }
+
     #[Route('/{token}/{id}', name: 'api_tag', methods: ['GET'])]
     public function tag(TagRepository $tr, string $token, $id = 0): Response
     {

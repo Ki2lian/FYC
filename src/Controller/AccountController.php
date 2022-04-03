@@ -33,7 +33,6 @@ class AccountController extends AbstractController
     #[Route('/account', name: 'account')]
     public function account(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, AuthenticationUtils $authenticationUtils): Response
     {
-
         if(!$this->getUser()){
             $user = new User();
             $form = $this->createForm(RegistrationFormType::class, $user);

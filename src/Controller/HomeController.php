@@ -28,9 +28,13 @@ class HomeController extends AbstractController
 
         // $comment = new Comment();
         // $form = $this->createForm(CommentType::class, $comment);
-        
+        $tips = $this->forward('App\Controller\API\TipController::allTips', [
+            'token' => $_ENV['API_TOKEN']
+        ]);
 
         return $this->render('home/index.html.twig', [
+            'urlAllTips' => $this->generateUrl('tips', array(), true ),
+            "tips" => $tips->getContent()
             // 'form' => $form->createView(),
            //'tags' => $tags,
            //'urls' => $urls,

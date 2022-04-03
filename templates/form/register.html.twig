@@ -24,6 +24,7 @@
 			<div class="mb-3">
 				{{ form_label(form.plainPassword, 'Mot de passe', { 'label_attr': {'class': 'form-label'} }) }}
 				{{ form_widget(form.plainPassword, {'attr': {'class': 'form-control border-bottom border-dark border-top-0 border-start-0 border-end-0 border-2','placeholder': 'Exemple: '~ password, 'minlength': 8, 'maxlength':4096, 'autocomplete': 'off'}}) }}
+				<small>Le mot de passe doit contenir au moins 1 lettre minuscule, 1 lettre majuscule, 1 caractère spécial et 8 caractères.</small>
 			</div>
 			<div class="mb-3">
 				{{ form_widget(form.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}

@@ -4,8 +4,7 @@
         <div class="container mt-5">
             <div class="row justify-content-center">
                 <div class="col-xxl-6 col-lg-8 forms">
-                    <div id="register" ref="formRegister"></div>
-                    <div id="login">
+                    <div id="login" ref="formLogin">
                         <div class="card card-form mt-5">
                             <div class="card-header pb-3 bg-interactive"></div>
                             <div class="border-form"></div>
@@ -33,11 +32,13 @@
                                         </div>
                                     </div>
                                 </form>
+                                <p class="text-muted text-center">Vous n'avez pas de compte ? <span class="ms-1 toggle-forms"><b>Inscrivez-vous</b></span></p>
                             </div>
                             <div class="border-form end-0"></div>
                             <div class="card-footer bg-interactive pt-3"></div>
                         </div>
                     </div>
+                    <div id="register" style="display: none;" ref="formRegister"></div>
                 </div>
             </div>
         </div>
@@ -46,9 +47,10 @@
 
 <script>
 import NavBar from "./component/NavBar.vue"
+import passtrength from "../jquery.passtrength.min.js"
 export default {
     name: "AccountLogInSignUp",
-     props: {
+    props: {
         formRegister: {
             type: String,
             default: ""
@@ -83,17 +85,49 @@ export default {
     },
     mounted() {
         this.$refs.formRegister.innerHTML = this.formRegister
+        
     },
 
 }
 
 $(document).ready(function(){
+    var formRegister = false;
+    $("#register .card .card-body").append(`
+        <p class="text-muted text-center">Vous avez déjà un compte ? <span class="ms-1 toggle-forms"><b>Connectez-vous</b></span></p>
+    `);
 
+    $("#registration_form_plainPassword").passtrength({
+        minChars: 8,
+        passwordToggle: false,
+        tooltip: true,
+        textWeak: "Faible",
+        textMedium: "Moyen",
+        textStrong: "Fort",
+        textVeryStrong: "Très fort"
+    });
+
+    $("#register, #login").on('click', '.toggle-forms', function(){
+        if(formRegister) {
+            $("#register").fadeOut(() => {
+                $("#login").fadeIn();
+            });
+        } else {
+            $("#login").fadeOut(() => {
+                $("#register").fadeIn();
+            });
+        }
+        formRegister = !formRegister;
+    });
 });
 </script>
 
 <style lang="scss">
 $interactive_text: #5147C5;
+
+.toggle-forms{
+    cursor: pointer;
+    color: $interactive_text;
+}
 
 .bg-interactive{
     background-color: $interactive_text;

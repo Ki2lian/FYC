@@ -32,7 +32,7 @@ class TipRepository extends ServiceEntityRepository
         ;
     }
 
-    public function tipByTag($tags, $skip, $fetch){
+    public function tipByTag($tags, $skip = 0, $fetch = null){
         $countTags = sizeof($tags);
         return $this->createQueryBuilder('tip')
                     ->join('tip.tag', 'tag')

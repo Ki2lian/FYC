@@ -32,7 +32,7 @@ class Comment
     private $tip;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["data-comment"])]
+    #[Groups(["data-comment", "data-tip"])]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime')]

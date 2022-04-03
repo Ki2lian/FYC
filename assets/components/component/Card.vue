@@ -1,7 +1,7 @@
 <template>
-    <div class="container">
+    <!-- <div class="container">
         <div class="tags">
-            <!-- condition pour récupérer les 2 premiers tags -->
+            condition pour récupérer les 2 premiers tags
             <div class="tag">Programmation</div>
             <div class="tag">C #</div>
         </div>
@@ -14,12 +14,66 @@
         <div class="btn">
             <a href="#">Voir</a>
         </div>
+    </div> -->
+
+    <!-- <div class="card">
+        <div class="card-header">
+            <simplebar data-simplebar-auto-hide="false" style="height: 40px;" class="mt-1">
+                <div class="tags d-flex flex-nowrap py-0">
+                    <a class="nav-link btn btn-primary p-0 px-2 mx-1 text-light" href="#">Programmation</a>
+                    <a class="nav-link btn btn-primary p-0 px-2 mx-1 text-light" href="#">C#</a>
+                </div>
+            </simplebar>
+        </div>
+        <div class="card-body">
+            <h3 class="card-title">Title</h3>
+            <p class="card-text text-muted">Owner</p>
+            <hr/>
+        </div>
+    </div> -->
+
+    <div class="row tip">
+        <div class="col-2 d-flex flex-column ms-5">
+            <p>{{ tip.ratings.length }} {{ "vote" | pluralize(tip.ratings.length) }}</p>
+            <p>{{ tip.comments.length }} {{ "commentaire" | pluralize(tip.comments.length) }}</p>
+        </div>
+        <div class="col">
+            <a href="#">{{ tip.title }}</a>
+            <div class="d-flex justify-content-between mt-3">
+                <div class="tags">
+                    <a class="tag btn btn-outline-info p-1 py-0 me-1 text-dark" :href="'/tips/tagged/' + tag.name" v-for="tag in tip.tag" :key="tag.id">{{ tag.name }}</a>
+                    
+                </div>
+                <p></p>
+                <div class="info me-5">
+                    <!-- 10 sec ago | 03/12/2022 à 18h46 -->
+                    <span><a href="#" class="mx-1">{{ tip.user.pseudo }}</a> <span class="mx-1">{{ dateFromNow(tip.createdAt) }}</span></span>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
+import * as moment from 'moment'
+moment.locale("fr")
 export default {
-
+    props: {
+        tip: {
+            type: Object,
+            required: true
+        },
+    },
+    mounted() {
+    },
+    methods: {
+        dateFromNow(date) {
+            return moment(date).fromNow();
+        }
+    },
+    name: 'card',
+    components: {
+    }
 }
 </script>
 
@@ -32,6 +86,14 @@ $interactive_text: #5147C5;
 $seconday_color: #EEEEEE;
 $background: #D8D8D8;
 
+.tip{
+    background-color: $seconday_color;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
+
+
 .container {
     background-color: $seconday_color;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
@@ -40,20 +102,29 @@ $background: #D8D8D8;
     flex: 0 0 20.333333%;
 }
 
-.tags {
-    display: flex;
-    margin-bottom: 10px;
+// .tags{
+//     overflow-x: scroll;
+// }
+
+.tags .tag:hover{
+    color: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
 }
 
-.tag {
-    margin-right: 25px;
-    padding: 5px;
-    background: $seconday_color;
-    border: 0.5px solid $background;
-    box-sizing: border-box;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
-}
+// .tags {
+//     display: flex;
+//     margin-bottom: 10px;
+// }
+
+// .tag {
+//     margin-right: 25px;
+//     padding: 5px;
+//     background: $seconday_color;
+//     border: 0.5px solid $background;
+//     box-sizing: border-box;
+//     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+//     border-radius: 10px;
+// }
 
 .title {
     font-size: larger;
@@ -71,16 +142,8 @@ hr {
     text-align: center;
 }
 
-.btn {
-    display: flex;
-    justify-content: center;
-}
 a {
-    width: 50%;
-    border-radius: 15px;
-    background-color: $interactive_text;
-    color: $seconday_color;
-    padding: 5px;
+    color: $interactive_text;
     text-decoration: none;
 }
 

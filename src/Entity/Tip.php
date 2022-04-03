@@ -45,12 +45,12 @@ class Tip
     private $ratings;
 
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'tips')]
-    #[Groups(["data-tip", "data-astuces-search-filter"])]
+    #[Groups(["data-tip", "data-astuces-search-filter", "data-tip"])]
     private $tag;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'tips')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["data-tip", "data-astuces-search-filter"])]
+    #[Groups(["data-tip", "data-astuces-search-filter", "data-tip"])]
     private $user;
 
     #[ORM\Column(type: 'boolean')]

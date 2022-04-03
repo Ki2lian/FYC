@@ -1,51 +1,61 @@
 <template>
   <div>
-      <nav class="navbar navbar-expand-lg navbar-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-xl-light">
         <div class="container-fluid">
-            <div class="logo">FYC.</div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <div class="logo">
+                <span class="d-flex">FYC.
+                    <vue-typed-js   :strings="[ 'css',
+                                                'html',
+                                                'py',
+                                                'js',
+                                                'php',
+                                                'vue',
+                                                'apk',
+                                                'asp',
+                                                'bat',
+                                                'bin',
+                                                'c',
+                                                'cpp',
+                                                'cs',
+                                                'dev',
+                                                'dart',
+                                                'exe',
+                                                'p',
+                                                'xml',
+                                                'yaml',
+                                                'json',
+                                                'twig',
+                                                'sql',
+                                                'java',
+                                                'md',
+                                                'sh',
+                                                'ts'
+                                    ]"
+                                    :startDelay="0"
+                                    :backDelay="5000"
+                                    :typeSpeed="50"
+                                    :backSpeed="50"
+                                    :shuffle="true"
+                                    :loop="true"
+                    >
+                        <span class="typing"></span>
+                    </vue-typed-js>
+                </span>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavigation" aria-controls="menuNavigation" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <div class="collapse navbar-collapse" id="menuNavigation">
                 <ul class="navbar-nav me-auto mb-lg-0">
                     <li class="nav-item">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuAstuces" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Astuces
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuAstuces">
-                                <a class="dropdown-item" href="#">Toutes les astuces</a>
-                                <a class="dropdown-item" href="#">Rechercher une astuce</a>
-                            </div>
-                        </div>
+                        <a class="nav-link" aria-current="page" href="/tips">Astuces</a>
                     </li>
                     <li class="nav-item">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuItems" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Items
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuItems">
-                                <a class="dropdown-item" href="#">Item 1</a>
-                                <a class="dropdown-item" href="#">Item 2</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuProfil" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Profil
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuProfil">
-                                <a class="dropdown-item" href="#">Voir</a>
-                                <a class="dropdown-item" href="#">Modifier</a>
-                            </div>
-                        </div>
+                        <a class="nav-link" aria-current="page" href="/account">Profil</a>
                     </li>
                 </ul>
-                <form class="d-flex">
-                     <input class="search__input" type="text" placeholder="Rechercher...">
-                     <button class="btn btn-outline-success" type="submit">Rechercher</button>
-                     <!-- Bouton de validation à changer/enlever -->
+                <form class="d-flex" @submit.prevent="checkSearch()">
+                     <input class="search__input" type="text" placeholder="Rechercher..." v-model="textSearch"/>
                 </form>
             </div>
         </div>
@@ -55,7 +65,16 @@
 
 <script>
 export default {
-
+    data() {
+        return {
+            textSearch: "",
+        }
+    },
+    methods: {
+        checkSearch() {
+            if(this.textSearch != "") window.location.replace("/tips/search/" + this.textSearch);
+        },
+    }
 }
 </script>
 
@@ -79,22 +98,24 @@ $seconday_color: #EEEEEE;
     }
     font-size: 32px;
     margin-right: 5%;
+    width: 100px;
 }
 
 .menus {
     padding-left: 2%;
 }
 
-.dropdown {
+.nav-item{
     margin: 10px;
 }
 
-button {
+.nav-link, button {
     @media (max-width: 768px) {
         font-size: 16px;
     }
+    padding: 0.375rem 0.75rem;
     background-color: transparent;
-    color: $text;
+    color: $text!important;
     border: none;
     font-size: 24px;
 
@@ -141,15 +162,12 @@ button {
             text-transform: uppercase;
             letter-spacing: 1.5px;
         }
-        
+
         &:hover,
         &:focus {
             color: $text;
-            padding: 12px 0;
+            padding: 12px;
             outline: 0;
-            border: 1px solid transparent;
-            border-bottom: 2px solid $text;
-            border-radius: 0;
         }
     }
 }

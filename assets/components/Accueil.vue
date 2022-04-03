@@ -5,13 +5,11 @@
         </div>
         <div class="block__second">
             <h1 class="card__title">Les dernières astuces mises en ligne.</h1>
-            <!-- Visualisation de 12 en 12, changer nombreCartesVisible si l'on veut autre chose -->
-            <div class="row justify-content-center">
-                <div v-for="item in actualCards" :key="item.id" class="col-xl-3 col-lg-4 col-sm-6 col-12">
-                    <!-- Sûrement faire du props pour récupérer les datas à envoyer au component Card -->
-                    <Card />
+            <div class="container">
+                <h4>{{ cards.length }} {{ "astuce" | pluralize(cards.length) }}</h4> 
+                <div v-for="item in actualCards" :key="item.id">
+                    <Card :tip="item" />
                 </div>
-                <!-- Changer la length plus tard quand on les aura dynamiquement -->
             </div>
             <v-pagination
                 v-model="page"
@@ -20,7 +18,7 @@
             ></v-pagination>
         </div>
 
-        <Block />
+        <Block :urlalltips="urlalltips" />
 
         <Footer />
 
@@ -33,21 +31,26 @@ import Card from "./component/Card.vue"
 import Footer from "./component/FooterVue.vue"
 import Block from "./component/Block.vue"
 export default {
+    props: {
+        urlalltips: {
+            type: String,
+            default: ""
+        },
+        tips: {
+            type: String,
+            default: ""
+        },
+    },
     data() {
         return {
             // TAGS DATA
             selectedTag: null,
-            optionsTags: ["Option 1","Option 2","Option 3"],
             // 
             textSearch: null,
             checkbox__note: false,
             //cards
             page: 1,
-            cards: ["Card 1","Card 2","Card 3","Card 4",
-            "Card 5","Card 6","Card 7","Card 8",
-            "Card 9","Card 10","Card 11","Card 12",
-            "Card 13","Card 14","Card 15","Card 16",
-            "Card 17","Card 18"],
+            cards: [],
             actualCards : [],
             sliceAllCards : [],
             nombreCartesVisible: 12,
@@ -60,27 +63,13 @@ export default {
         Block,
     },
     mounted() {
+        this.cards = JSON.parse(this.tips)
         for(let i = 0; i < this.cards.length; i+= this.nombreCartesVisible) {
             const index = i + this.nombreCartesVisible
             this.sliceAllCards.push(this.cards.slice(i, index))
         }
         //init first page
         this.actualCards = this.sliceAllCards[0]
-        console.log(this.actualCards);
-        // hide container filter if user wants to see menu items
-        const filter = document.querySelector(".container__filter")
-        const navbarToggler = document.querySelector(".navbar-toggler-icon")
-        navbarToggler.addEventListener("click", () => {
-            
-            if(filter.classList.contains("hide")) {
-                setTimeout(()=>{
-                    filter.classList.toggle("hide")
-                },250)
-            }
-            else {
-                filter.classList.toggle("hide")
-            }
-        })
     },
     methods: {
         onPageChange() {
