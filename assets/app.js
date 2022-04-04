@@ -13,12 +13,18 @@ import vuetify from "./plugins/vuetify.js"
 import Vue from 'vue'
 import Astuces from "./components/Astuces.vue"
 import Profil from "./components/Profil.vue"
+import BackOffice from "./components/BackOffice.vue"
+import VueApexCharts  from 'vue-apexcharts'
+
+Vue.use(VueApexCharts)
+Vue.component('apexchart', VueApexCharts)
 
 new Vue({ 
     el: '#app', 
     components: {
         Astuces,
         Profil,
+        BackOffice,
     },
     vuetify,
 })
