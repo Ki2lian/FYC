@@ -2,15 +2,10 @@
   <div class="container__astuce">
     <NavBar class="fixed" />
 
-    <div class="block__first row">
-      <div class="title col-6">
+      <div class="title d-flex">
         <h1>L’astuce (titre de l’astuce)</h1>
-      </div>
-
-      <div class="btn col-6">
         <a href="#">Donne une astuce</a>
       </div>
-    </div>
 
     <div class="row jumbotron">
       <p class="text__trait col">
@@ -97,18 +92,12 @@ $interactive_text: #5147c5;
 $text: #b2b2b2;
 
 .container__astuce {
-  .block__first {
-    margin-bottom: 50px;
-
     .title {
-      text-align: end;
-    }
-
-    .btn {
-      text-align: start;
+      text-align: center;
+      justify-content: center;
 
       a {
-        width: 25%;
+        width: 200px;
         border-radius: 15px;
         background-color: $interactive_text;
         color: $seconday_color;
@@ -117,10 +106,9 @@ $text: #b2b2b2;
         text-decoration: none;
         position: relative;
         font-size: 18px;
-        top: 25px;
+        margin-left: 10px;
       }
     }
-  }
   
   .row{
     margin-block: 30px;
