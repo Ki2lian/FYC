@@ -29,10 +29,11 @@
         </div>
         <div class="block__second">
             <!-- Visualisation de 12 en 12, changer nombreCartesVisible si l'on veut autre chose -->
-            <div class="row justify-content-center">
-                <div v-for="item in actualCards" :key="item.id" class="col-xl-3 col-lg-4 col-sm-6 col-12">
-                    <!-- Sûrement faire du props pour récupérer les datas à envoyer au component Card -->
-                    <Card />
+            <div class="row justify-content-center ">
+                <div v-for="item in actualCards" :key="item.id" class="col-12 p-0 ">
+                    <!-- col-xl-3 col-lg-4 col-sm-6  (css pour les cartes) -->
+                    <!-- Sûrement faire du props pour récupérer les datas à envoyer au component -->
+                    <Astuce v-bind:data="item"/>
                 </div>
                 <!-- Changer la length plus tard quand on les aura dynamiquement -->
             </div>
@@ -48,7 +49,8 @@
 
 <script>
 import NavBar from "./component/NavBar.vue"
-import Card from "./component/Card.vue"
+// import Card from "./component/Card.vue"
+import Astuce from "./component/Astuce.vue"
 import Footer from "./component/FooterVue.vue"
 
 export default {
@@ -65,11 +67,26 @@ export default {
 
             //cards
             page: 1,
-            cards: ["Card 1","Card 2","Card 3","Card 4",
-            "Card 5","Card 6","Card 7","Card 8",
-            "Card 9","Card 10","Card 11","Card 12",
-            "Card 13","Card 14","Card 15","Card 16",
-            "Card 17","Card 18"],
+            cards: [
+                {name: "Card 1"},
+                {name: "Card 2"},
+                {name: "Card 3"},
+                {name: "Card 4"},
+                {name: "Card 5"},
+                {name: "Card 6"},
+                {name: "Card 7"},
+                {name: "Card 8"},
+                {name: "Card 9"},
+                {name: "Card 10"},
+                {name: "Card 11"},
+                {name: "Card 12"},
+                {name: "Card 13"},
+                {name: "Card 14"},
+                {name: "Card 15"},
+                {name: "Card 16"},
+                {name: "Card 17"},
+                {name: "Card 18"}
+            ],
             actualCards : [],
             sliceAllCards : [],
             nombreCartesVisible: 12,
@@ -78,7 +95,8 @@ export default {
 
     components: {
         NavBar,
-        Card,
+        // Card,
+        Astuce,
         Footer,
     },
 
@@ -90,7 +108,7 @@ export default {
         }
         //init first page
         this.actualCards = this.sliceAllCards[0]
-        console.log(this.actualCards);
+        // console.log(this.actualCards);
 
         // hide container filter if user wants to see menu items
         const filter = document.querySelector(".container__filter")
@@ -116,6 +134,8 @@ export default {
 
         onPageChange() {
             this.actualCards = this.sliceAllCards[this.page-1]
+            document.body.scrollTop = 0; // Safari
+            document.documentElement.scrollTop = 0; // Chrome, Firefox, IE and Opera
         }
     }
 
