@@ -1,6 +1,6 @@
 <template>
-    <div class="admin__commentaires">
-        <h2>Commentaires de l'astuce <i>Title</i></h2>
+    <div class="admin__utilisateurs">
+        <h2>Administration des utilisateurs</h2>
         <div class="table">
             <v-simple-table >
                 <template v-slot:default>
@@ -8,43 +8,22 @@
                     <tr>
                         <th class="text-left">Owner</th>
                         <th class="text-left">Content</th>
-                        <th class="text-left">Modifier</th>
                         <th class="text-left">Supprimer</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr v-for="(commentaire, index) in commentaires" :key="index">
-                        <td>{{ commentaire.owner }}</td>
+                        <td><a href="#">{{ commentaire.owner }}</a></td>
+                        <!-- Possibilité de visiter le profil de l'utilisateur ? -->
 
                         <td v-if="commentaire.content.length < 150">{{ commentaire.content }}</td>
                         <td v-else>{{ commentaire.content.substring(0, 150) + " ..." }}</td>
 
-                        <td class="pointer" data-bs-toggle="modal" data-bs-target="#modifierModal"><i class="fa fa-solid fa-marker"></i></td>
                         <td class="pointer" v-on:click="supprimer"><i class="fa fa-solid fa-trash"></i></td>
                     </tr>
                     </tbody>
                 </template>
             </v-simple-table>
-        </div>
-
-        <button type="button" class="btn btn-interactive" data-bs-toggle="modal" data-bs-target="#modifierModal">Modal "Modifier" (à implémenter)</button>
-
-        <div class="modal fade" id="modifierModal" tabindex="-1" aria-labelledby="modifierModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modifier le commentaire</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    FORMULAIRE À IMPLÉMENTER
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                    <button type="button" class="btn btn-interactive">Modifier</button>
-                </div>
-            </div>
-        </div>
         </div>
         
     </div>
@@ -105,7 +84,7 @@ export default {
 
     methods: {
         /**
-         * Methode à implémenter pour supprimer un commentaire
+         * Methode à implémenter pour supprimer un utilisateur
          */
         supprimer: function() {
             console.log("click")
@@ -119,7 +98,7 @@ export default {
 $interactive_text: #5147C5;
 $interactive_text_dark: #413999;
 
-.admin__commentaires {
+.admin__utilisateurs {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -142,12 +121,8 @@ h2 {
     cursor: pointer;
 }
 
-.btn-interactive {
-    background-color: $interactive_text;
-    color: white;
-
-    &:hover {
-        background-color: $interactive_text_dark;
-    }
+a {
+    color: $interactive_text;
+    text-decoration: none;
 }
 </style>
