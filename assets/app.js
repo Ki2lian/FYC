@@ -14,6 +14,7 @@ import Vue from 'vue'
 import Astuces from "./components/Astuces.vue"
 import Profil from "./components/Profil.vue"
 import BackOffice from "./components/BackOffice.vue"
+import AdminCommentaires from "./components/backoffice/Commentaires.vue"
 import VueApexCharts  from 'vue-apexcharts'
 
 Vue.use(VueApexCharts)
@@ -25,6 +26,7 @@ new Vue({
         Astuces,
         Profil,
         BackOffice,
+        AdminCommentaires
     },
     vuetify,
 })
