@@ -24,11 +24,13 @@ class AccountController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('account/login.html.twig', [
+        return $this->render('account/account_not_logged.html.twig', [
             'last_username' => $lastUsername,
             'error'         => $error,
         ]);
     }
+
+
 
     #[Route('/account', name: 'account')]
     public function account(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, AuthenticationUtils $authenticationUtils): Response
@@ -62,7 +64,7 @@ class AccountController extends AbstractController
                         $form->get('plainPassword')->getData()
                     )
                 );
-    
+                // Test123fyc*
                 $entityManager->persist($user);
                 $entityManager->flush();
                 // do anything else you need here, like send an email

@@ -28,7 +28,7 @@
                                         </div>
                                         <input type="hidden" name="_csrf_token" :value="token">
                                         <div class="mb-3 text-center">
-                                            <button class="btn bg-interactive" type="submit" name="connection">Se connecter</button>
+                                            <button class="btn bg-interactive" type="submit" name="login">Se connecter</button>
                                         </div>
                                     </div>
                                 </form>
@@ -85,7 +85,10 @@ export default {
     },
     mounted() {
         this.$refs.formRegister.innerHTML = this.formRegister
-        
+        if(this.$refs.formRegister.querySelector("form").querySelector(".alert")){
+            $("#login").hide();
+            $("#register").show();
+        }
     },
 
 }
