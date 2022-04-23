@@ -47,6 +47,7 @@
                     </v-row>
                 </v-container>
             </v-form>
+            <Footer />
         </v-main>
     </v-app>
 </template>
@@ -55,6 +56,7 @@
 
 <script>
 import Editor from '@tinymce/tinymce-vue';
+import Footer from "./component/FooterVue.vue"
 
 export default {
 
@@ -74,6 +76,7 @@ export default {
 
     components: {
         Editor,
+        Footer,
     },
 
     methods: {
