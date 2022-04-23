@@ -7,8 +7,7 @@
         <ul class="list-unstyled text-small">
           <li><a href="#">FAQ</a></li>
           <li><a href="#">Mentions légales</a></li>
-          <li><a href="#">Toutes les astuces</a></li>
-          <li><a href="#">BackOffice</a></li>
+          <li><a href="/tips">Toutes les astuces</a></li>
         </ul>
       </div>
       <div class="col-6 col-md">
@@ -21,12 +20,12 @@
         </ul>
       </div>
       <div class="col-6 col-md">
-        <h5>Resources</h5>
+        <h5>Tags populaires</h5>
         <ul class="list-unstyled text-small">
-          <li><a href="#">Business</a></li>
-          <li><a href="#">Education</a></li>
-          <li><a href="#">Government</a></li>
-          <li><a href="#">Gaming</a></li>
+          <li><a href="/tips/tagged/js">JS</a></li>
+          <li><a href="/tips/tagged/python">Python</a></li>
+          <li><a href="/tips/tagged/css">CSS</a></li>
+          <li><a href="/tips/tagged/docker">Docker</a></li>
         </ul>
       </div>
       <div class="col-8 col-md">

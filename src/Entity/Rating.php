@@ -19,7 +19,7 @@ class Rating
 
     #[ORM\ManyToOne(targetEntity: Tip::class, inversedBy: 'ratings')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["data-rating","data-tip"])]
+    #[Groups(["data-rating"])]
     private $tip;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'ratings')]

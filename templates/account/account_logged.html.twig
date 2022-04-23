@@ -1,7 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LoginController!{% endblock %}
+{% block title %}Profil{% endblock %}
 
 {% block body %}
-<h1>page profil..</h1>
+{% set user = {
+    "pseudo": app.user.pseudo,
+    "email": app.user.email,
+    "nbComments": app.user.comments | length,
+    "nbTips": app.user.tips | length,
+} %}
+
+<profil app-user="{{ user | json_encode }}"></profil>
 {% endblock %}

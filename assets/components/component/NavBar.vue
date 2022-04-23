@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-xl-light">
         <div class="container-fluid">
             <div class="logo">
-                <span class="d-flex">FYC.
+                <a class="d-flex text-decoration-none text-dark" href="/">FYC.
                     <vue-typed-js   :strings="[ 'css',
                                                 'html',
                                                 'py',
@@ -40,7 +40,7 @@
                     >
                         <span class="typing"></span>
                     </vue-typed-js>
-                </span>
+                </a>
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavigation" aria-controls="menuNavigation" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

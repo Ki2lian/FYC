@@ -64,7 +64,7 @@ class AccountController extends AbstractController
                         $form->get('plainPassword')->getData()
                     )
                 );
-                // Test123fyc*
+
                 $entityManager->persist($user);
                 $entityManager->flush();
                 // do anything else you need here, like send an email
@@ -80,6 +80,22 @@ class AccountController extends AbstractController
                 'password' => $password
             ]);
         }
+
+        $tips = $this->getUser()->getTips();
+        $cptRatings = 0;
+        $cptTipsRated = 0;
+        $sum = 0;
+        foreach ($tips as $key => $tip) {
+            $ratings = $tip->getRatings();
+            foreach ($ratings as $key => $rating) {
+                if($key == 0) $cptTipsRated++;
+                $sum += $rating->getValue();
+                $cptRatings++;
+            }
+        }
+        // dd($cptTipsRated);
+        // dd($sum / sizeof($tips));
+        // dd($sum, $cptRatings, (int)round(($sum/$cptRatings)*100) );
         return $this->render('account/account_logged.html.twig', [
         ]);
     }

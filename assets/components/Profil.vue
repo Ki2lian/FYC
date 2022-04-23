@@ -4,15 +4,19 @@
             <NavBar />
         </div>
         <div class="block__second">
-            <div class="welcome">Bienvenue sur votre profile <i>Pseudo</i> !</div>
+            <div class="welcome">Bienvenue sur votre profil {{ user.pseudo }} !</div>
             <div class="personnal-information">
-                <h3>Information personnelle</h3>
-                <div class="username"><img class="icon__user" src="../img/user.svg" alt="icon user">Pseudo</div>
-                <div class="mail"><img class="icon__mail" src="../img/mail.svg" alt="icon mail">Adresse mail</div>
+                <h3>Informations personnelles</h3>
+                <div class="username"><img class="icon__user" src="../img/user.svg" alt="icon user">{{ user.pseudo }}</div>
+                <div class="mail"><img class="icon__mail" src="../img/mail.svg" alt="icon mail">{{ user.email }}</div>
             </div>
             <div class="infos__block row">
-                <div class="infos__child col-md-6"><img class="icon__astuce" src="../img/astuce.svg" alt="icon astuce">[Nombre d'astuces postées]</div>
-                <div class="infos__child col-md-6"><img class="icon__commentaire" src="../img/commentaire.svg" alt="icon commentaire">[Nombre de commentaires postées]</div>
+                <div class="infos__child col-md-6"><img class="icon__astuce" src="../img/astuce.svg" alt="icon astuce">
+                    {{ user.nbTips }} {{ "astuce" | pluralize(user.nbTips) }} {{ "postée" | pluralize(user.nbTips) }}
+                </div>
+                <div class="infos__child col-md-6"><img class="icon__commentaire" src="../img/commentaire.svg" alt="icon commentaire">
+                    {{ user.nbComments }} {{ "commentaire" | pluralize(user.nbComments) }} {{ "posté" | pluralize(user.nbComments) }}
+                </div>
                 <div class="infos__child col-md-6"><div class="infos__tags">Tags des astuces postées<div class="temporary">CHARTJS</div></div></div>
                 <div class="infos__child col-md-6">Note moyenne des annonces<img class="icon__commentaire" src="../img/temporary_stars.svg" alt="icon commentaire"></div>
             </div>
@@ -35,12 +39,19 @@
 import NavBar from "./component/NavBar.vue"
 import Footer from "./component/FooterVue.vue"
 export default {
+    props: {
+        appUser: {
+            type: String,
+            required: true
+        }
+    },
     components: {
         NavBar,
         Footer,
     },
     data () {
         return {
+            user: {},
             headers: [
             {
                 text: 'Dessert (100g serving)',
@@ -139,6 +150,7 @@ export default {
         }
     },
     mounted() {
+        this.user = JSON.parse(this.appUser)
     },
     methods: {
     },
