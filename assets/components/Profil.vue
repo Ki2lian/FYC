@@ -18,16 +18,62 @@
                     {{ user.nbComments }} {{ "commentaire" | pluralize(user.nbComments) }} {{ "posté" | pluralize(user.nbComments) }}
                 </div>
                 <div class="infos__child col-md-6"><div class="infos__tags">Tags des astuces postées<div class="temporary">CHARTJS</div></div></div>
-                <div class="infos__child col-md-6">Note moyenne des annonces<img class="icon__commentaire" src="../img/temporary_stars.svg" alt="icon commentaire"></div>
+                <div class="infos__child col-md-6">
+                    <span>Note moyenne des annonces</span>
+                    <div v-if="user.note == null">
+                        <span>Aucune note</span>
+                    </div>
+                    <div class="d-flex" v-else>
+                        <span v-for="_ in 5" :key="_">
+                            <i v-if="_ <= user.note" class="fas fa-star fa-lg"></i>
+                            <i v-else class="far fa-star fa-lg"></i>
+                        </span>
+                    </div>
+                </div>
             </div>
             <div class="data_users">
                 <!-- datatable temporaire avec données temporaires -->
                 <v-data-table
                     :headers="headers"
-                    :items="desserts"
+                    :items="tips"
                     :items-per-page="5"
                     class="elevation-1"
-                ></v-data-table>
+                >
+                <!-- <template v-slot:body="{ desserts }">
+                    <tbody>
+                        <tr v-for="dessert in desserts" :key="dessert.id">
+                            <td>{{ dessert.title }}</td>
+                            <td>{{ dessert.isValid }}</td>
+                            <td>{{ dessert.createdDate }}</td>
+                            <td>{{ dessert.protein }}</td>
+                            <td>{{ dessert.iron }}</td>
+                        </tr>
+                    </tbody>
+                </template> -->
+
+                <template v-slot:item.ratings="{ item }">
+                    <span v-html="getStars(item.ratings)"></span>
+                </template>
+
+                <template v-slot:item.comments="{ item }">
+                    <span>{{ item.comments.length }}</span>
+                </template>
+
+                <template v-slot:item.createdAt="{ item }">
+                    <span>{{ getCreatedAt(item.createdAt) }}</span>
+                </template>
+
+                <template v-slot:item.isValid="{ item }">
+                    <span v-if="item.isValid">Oui</span>
+                    <span v-else>Non</span>
+                </template>
+
+                <template v-slot:item.action="{ item }">
+                    <button class="btn p-1" @click="showTip(item)"><i class="fas fa-eye text-secondary"></i></button>
+                    <button class="btn p-1" @click="editTip(item)"><i class="fas fa-edit text-primary"></i></button>
+                    <button class="btn p-1" @click="deleteTip(item.id)"><i class="fas fa-trash text-danger"></i></button>
+                </template>
+                </v-data-table>
             </div>
             <!-- Ajouter le pseudo dynamiquement -->
         </div>
@@ -53,106 +99,68 @@ export default {
         return {
             user: {},
             headers: [
-            {
-                text: 'Dessert (100g serving)',
-                align: 'start',
-                sortable: false,
-                value: 'name',
-            },
-            { text: 'Calories', value: 'calories' },
-            { text: 'Fat (g)', value: 'fat' },
-            { text: 'Carbs (g)', value: 'carbs' },
-            { text: 'Protein (g)', value: 'protein' },
-            { text: 'Iron (%)', value: 'iron' },
+                { text: 'Titre', align: 'start', value: 'title',},
+                { text: 'Note (moyenne)', value: 'ratings' },
+                { text: 'Commentaires', value: 'comments' },
+                { text: 'Date de création', value: 'createdAt' },
+                { text: 'En ligne', value: 'isValid' },
+                { text: 'Action',  value: 'action', sortable: false, align: 'center' },
             ],
-            desserts: [
-            {
-                name: 'Frozen Yogurt',
-                calories: 159,
-                fat: 6.0,
-                carbs: 24,
-                protein: 4.0,
-                iron: '1%',
-            },
-            {
-                name: 'Ice cream sandwich',
-                calories: 237,
-                fat: 9.0,
-                carbs: 37,
-                protein: 4.3,
-                iron: '1%',
-            },
-            {
-                name: 'Eclair',
-                calories: 262,
-                fat: 16.0,
-                carbs: 23,
-                protein: 6.0,
-                iron: '7%',
-            },
-            {
-                name: 'Cupcake',
-                calories: 305,
-                fat: 3.7,
-                carbs: 67,
-                protein: 4.3,
-                iron: '8%',
-            },
-            {
-                name: 'Gingerbread',
-                calories: 356,
-                fat: 16.0,
-                carbs: 49,
-                protein: 3.9,
-                iron: '16%',
-            },
-            {
-                name: 'Jelly bean',
-                calories: 375,
-                fat: 0.0,
-                carbs: 94,
-                protein: 0.0,
-                iron: '0%',
-            },
-            {
-                name: 'Lollipop',
-                calories: 392,
-                fat: 0.2,
-                carbs: 98,
-                protein: 0,
-                iron: '2%',
-            },
-            {
-                name: 'Honeycomb',
-                calories: 408,
-                fat: 3.2,
-                carbs: 87,
-                protein: 6.5,
-                iron: '45%',
-            },
-            {
-                name: 'Donut',
-                calories: 452,
-                fat: 25.0,
-                carbs: 51,
-                protein: 4.9,
-                iron: '22%',
-            },
-            {
-                name: 'KitKat',
-                calories: 518,
-                fat: 26.0,
-                carbs: 65,
-                protein: 7,
-                iron: '6%',
-            },
-            ],
+            tips: [],
+            // desserts: [
+            //     {
+            //         id: 1,
+            //         title: 'Frozen Yogurt',
+            //         isValid: 159,
+            //         createdDate: 6.0,
+            //         protein: 4.0,
+            //         iron: '1%',
+            //     },
+            //     {
+            //         id: 2,
+            //         title: 'Ice cream sandwich',
+            //         isValid: 237,
+            //         createdDate: 9.0,
+            //         protein: 4.3,
+            //         iron: '1%',
+            //     },
+            // ],
         }
     },
     mounted() {
         this.user = JSON.parse(this.appUser)
+        this.tips = this.user.tips
+        console.log(this.user.tips)
     },
     methods: {
+        getStars(ratings) {
+            let note = 0
+            ratings.forEach(rating => note += rating.value)
+            let average = Math.round((note / ratings.length) * 5)
+
+            let html = ''
+            for (let i = 1; i <= 5; i++) {
+                if(i <= average) html += '<i class="fas fa-star fa-lg" style="color: #FFD700; filter: drop-shadow(0px 0px 2px #000);"></i>'
+                else html += '<i class="far fa-star fa-lg" style="color: #FFD700; filter: drop-shadow(0px 0px 2px #000);"></i>'
+            }
+            return html
+        },
+        getCreatedAt(createdAt) {
+            let date = new Date(createdAt)
+            let day = ("0" + date.getDate()).slice(-2)
+            let month = ("0" + (date.getMonth() + 1)).slice(-2)
+            let year = date.getFullYear()
+            return `${day}/${month}/${year}`
+        },
+        showTip(tip) {
+            window.location.href = `/tip/${tip.id}`
+        },
+        editTip(tip) {
+            // page de modification
+        },
+        deleteTip(id) {
+            // window confirm puis call API
+        }
     },
 }
 </script>
@@ -163,6 +171,11 @@ $light_text: #383d3d;
 $interactive_text: #5147C5;
 $seconday_color: #EEEEEE;
 $background: #D8D8D8;
+
+.fa-star{
+    color: #FFD700;
+    filter: drop-shadow(0px 0px 2px #000);
+}
 .temporary {
     margin: 100px;
 }

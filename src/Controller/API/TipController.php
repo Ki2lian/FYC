@@ -5,7 +5,6 @@ namespace App\Controller\API;
 use App\Entity\Tip;
 use App\Form\TipType;
 use App\Repository\TipRepository;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,6 +31,15 @@ class TipController extends AbstractController
         return $this->json(["code" => 403, "message" => "Access Denied"], 403);
     }
 
+    #[Route('/{token}/', name: 'api_tip_by_user', methods: ['GET'])]
+    public function tipUser(TipRepository $tr, string $token, Request $request): Response
+    {
+        $userId = $request->get("userId");
+        if ($token !== $_ENV['API_TOKEN']) return $this->json(["code" => 403, "message" => "Access Denied"], 403);
+        $tip = $tr->findBy(array("user" => $userId));
+        return $tip === null ? $this->json(["code" => 404, "message" => "Les astuces de l'utilisateur n'a pas été trouvé"]) : $this->json($tip, 200, [], ['groups' => "data-tip"]);
+    }
+    
     #[Route('/{token}/{id}', name: 'api_tip', methods: ['GET'])]
     public function tip(TipRepository $tr, string $token, $id = 0): Response
     {
@@ -41,7 +49,7 @@ class TipController extends AbstractController
     }
 
     #[Route('', name: 'api_add_tip', methods: ['POST'])]
-    public function addTip(EntityManagerInterface $entityManager, Request $request, UserRepository $ur): Response
+    public function addTip(EntityManagerInterface $entityManager, Request $request): Response
     {
         $isAjax = $request->isXMLHttpRequest();
         if (!$isAjax) return new Response('', 404);
@@ -71,7 +79,7 @@ class TipController extends AbstractController
     }
 
     #[Route('', name: 'api_edit_tip', methods: ['PUT'])]
-    public function editTip(EntityManagerInterface $entityManager, Request $request, TipRepository $tr, UserRepository $ur): Response
+    public function editTip(EntityManagerInterface $entityManager, Request $request, TipRepository $tr): Response
     {
         $isAjax = $request->isXMLHttpRequest();
         if (!$isAjax) return new Response('', 404);

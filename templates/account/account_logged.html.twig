@@ -8,6 +8,8 @@
     "email": app.user.email,
     "nbComments": app.user.comments | length,
     "nbTips": app.user.tips | length,
+    "note": note,
+    "tips": tips
 } %}
 
 <profil app-user="{{ user | json_encode }}"></profil>

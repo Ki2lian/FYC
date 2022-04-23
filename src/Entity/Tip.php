@@ -54,6 +54,7 @@ class Tip
     private $user;
 
     #[ORM\Column(type: 'boolean')]
+    #[Groups(["data-tip"])]
     private $isValid;
 
     public function __construct()

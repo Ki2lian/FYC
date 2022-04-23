@@ -82,6 +82,11 @@ class AccountController extends AbstractController
         }
 
         $tips = $this->getUser()->getTips();
+        $userTips = $this->forward('App\Controller\API\TipController::tipUser', [
+            'token' => $_ENV['API_TOKEN'],
+            'userId' => $this->getUser()->getId()
+        ]);
+        $userTips = json_decode($userTips->getContent(), true);
         $cptRatings = 0;
         $cptTipsRated = 0;
         $sum = 0;
@@ -93,10 +98,11 @@ class AccountController extends AbstractController
                 $cptRatings++;
             }
         }
-        // dd($cptTipsRated);
-        // dd($sum / sizeof($tips));
-        // dd($sum, $cptRatings, (int)round(($sum/$cptRatings)*100) );
+        if($cptTipsRated != 0) $average = round(($sum / $cptRatings) * 5);
+        else $average = null;
         return $this->render('account/account_logged.html.twig', [
+            "note" =>$average,
+            "tips" => $userTips
         ]);
     }
 
