@@ -17,6 +17,7 @@ import Profil from "./components/Profil.vue"
 import BackOffice from "./components/BackOffice.vue"
 import AdminCommentaires from "./components/backoffice/Commentaires.vue"
 import AdminUtilisateurs from "./components/backoffice/Utilisateurs.vue"
+import AddAstuce from "./components/AddAstuce.vue"
 
 import VueApexCharts  from 'vue-apexcharts'
 
@@ -30,7 +31,8 @@ new Vue({
         Profil,
         BackOffice,
         AdminCommentaires,
-        AdminUtilisateurs
+        AdminUtilisateurs,
+        AddAstuce
     },
     vuetify,
 })
