@@ -8,9 +8,9 @@
     </div>
 
     <div class="row jumbotron">
-      <p class="text__trait col">Créer:</p>
-      <p class="text__trait col">Dernière activité:</p>
-      <p class="text__trait col">Vue:</p>
+      <p class="text__trait col">Créer :</p>
+      <p class="text__trait col">Dernière activité :</p>
+      <p class="text__trait col">Vue :</p>
       <hr class="trait my-4" />
     </div>
 
@@ -36,11 +36,27 @@
           profecto intellegis quanta in dato beneficio sit laus, cum in accepto
           sit tanta gloria.
         </p>
+
+        <div v-html="codeExample">
+
+        </div>
+      </div>
+
+      <div class="container__card">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">Publié le 2 janv à 13h50</p>
+            <div class="logo d-flex">
+              <img src="../img/user-solid.svg" alt="" />
+              <p>Emeric GABIN</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="tips">
-      <p>Nombre de commentaire 2</p>
+      <p>Nombre de commentaire 1</p>
       <div class="container__tips">
         <p class="desc__tips">
           Altiora gestis artissime conpertis an agens qui agens gener tenebatur
@@ -110,6 +126,8 @@ import NavBar from "./component/NavBar.vue";
 import Footer from "./component/FooterVue.vue";
 import Editor from "@tinymce/tinymce-vue";
 import hljs from "highlight.js";
+import 'highlight.js/styles/stackoverflow-light.css';
+import { marked } from 'marked';
 
 export default {
   components: {
@@ -119,17 +137,16 @@ export default {
     hljs,
   },
 
-  /* data(){
-    return {
-      markdown: "# hello world",
-    }
-  },
-
   computed:{
-    markdown(){
-      return marked(this.markdown)
-    },
-  } */
+    codeExample(){
+      console.log(hljs);
+      return marked('``` <div align="center">you content</div> <div id="myDiv">you content</div> ```', {
+        hljs(md){
+          return hljs.highlightAuto(md).value
+        }
+      });
+    }
+  }
 };
 </script>
 
@@ -174,7 +191,7 @@ $text: #b2b2b2;
 
   .body-container {
     margin: 0 auto;
-    width: 70%;
+    width: 91%;
 
     .astuce {
       .astuce-text {
@@ -183,6 +200,30 @@ $text: #b2b2b2;
         text-align: justify;
       }
     }
+
+    .container__card {
+      margin-top: 40px;
+      width: 100%;
+      display: flex;
+      justify-content: end;
+      .card {
+        display: inline-flex;
+        .card-body {
+          .logo {
+            width: 40px;
+            height: 40px;
+            p {
+              margin-left: 10px;
+            }
+          }
+          .card-title {
+            font-size: 12px;
+            color: "#494949";
+          }
+        }
+      }
+    }
+
   }
 
   .commentaire {
@@ -219,7 +260,8 @@ $text: #b2b2b2;
 
     .container__tips {
       margin-inline: 25px;
-      .container__card{
+      .container__card {
+        margin-top: 40px;
         width: 100%;
         display: flex;
         justify-content: end;
