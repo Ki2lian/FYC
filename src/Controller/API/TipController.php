@@ -4,6 +4,7 @@ namespace App\Controller\API;
 
 use App\Entity\Tip;
 use App\Form\TipType;
+use App\Repository\TagRepository;
 use App\Repository\TipRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -48,23 +49,36 @@ class TipController extends AbstractController
         return $tip === null ? $this->json(["code" => 404, "message" => "L'astuce n'a pas été trouvé"]) : $this->json($tip, 200, [], ['groups' => "data-tip"]);
     }
 
+    #[Route('', name: 'api_get_tip', methods: ['GET'])]
+    public function getTip(): Response{
+        return new Response('', 404);
+    }
+
     #[Route('', name: 'api_add_tip', methods: ['POST'])]
-    public function addTip(EntityManagerInterface $entityManager, Request $request): Response
+    public function addTip(EntityManagerInterface $entityManager, Request $request, TagRepository $tagr): Response
     {
         $isAjax = $request->isXMLHttpRequest();
         if (!$isAjax) return new Response('', 404);
-
+        $tags = $request->get("tags");
         $tip = new Tip();
         $form = $this->createForm(TipType::class, $tip);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $tip->setUser($this->getUser());
             // $tip->setUser($tr->find($request->get('id_user')));
+
+            $tags = explode(",", $tags);
+            foreach ($tags as $key => $tag) {
+                $tag = $tagr->findBy(array("name" => $tag));
+                if(!empty($tag)){
+                    $tip->addTag($tag[0]);
+                }
+            }
             $entityManager->persist($tip);
             $entityManager->flush();
             return $this->json([
                 "code" => 200, 
-                "message" => "Astuce ajouté",
+                "message" => "Astuce ajoutée",
                 "info" => array(
                     "id" => $tip->getId(),
                     "title" => $tip->getTitle(),

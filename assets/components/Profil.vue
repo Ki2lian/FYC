@@ -9,6 +9,7 @@
                 <h3>Informations personnelles</h3>
                 <div class="username"><img class="icon__user" src="../img/user.svg" alt="icon user">{{ user.pseudo }}</div>
                 <div class="mail"><img class="icon__mail" src="../img/mail.svg" alt="icon mail">{{ user.email }}</div>
+                <a href="/logout" class="btn btn-primary btn-logout">Se déconnecter</a>
             </div>
             <div class="infos__block row mb-4">
                 <div class="infos__child col-md-4"><img class="icon__astuce" src="../img/astuce.svg" alt="icon astuce">
@@ -144,6 +145,11 @@ $light_text: #383d3d;
 $interactive_text: #5147C5;
 $seconday_color: #EEEEEE;
 $background: #D8D8D8;
+
+.btn-logout{
+    background-color: #5147C5;
+    color: #fff;
+}
 
 .fa-star{
     color: #FFD700;

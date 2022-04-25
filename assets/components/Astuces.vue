@@ -49,8 +49,7 @@
 
 <script>
 import NavBar from "./component/NavBar.vue"
-// import Card from "./component/Card.vue"
-import Astuce from "./component/Astuce.vue"
+import Card from "./component/Card.vue"
 import Footer from "./component/FooterVue.vue"
 export default {
     props: {
@@ -81,8 +80,7 @@ export default {
     },
     components: {
         NavBar,
-        // Card,
-        Astuce,
+        Card,
         Footer,
     },
     mounted() {

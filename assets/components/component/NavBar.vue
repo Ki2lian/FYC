@@ -48,6 +48,9 @@
             <div class="collapse navbar-collapse" id="menuNavigation">
                 <ul class="navbar-nav me-auto mb-lg-0">
                     <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/add_tip">Ajouter une astuce</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/tips">Astuces</a>
                     </li>
                     <li class="nav-item">

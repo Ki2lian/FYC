@@ -58,4 +58,33 @@ class TipController extends AbstractController
             "tips" => $tips
         ]);
     }
+
+    #[Route('/add_tip', name: 'add_tip')]
+    public function addTip(Request $request): Response
+    {
+        if($this->getUser() == null) {
+            return $this->redirectToRoute('account');
+        }
+        /*if($request->isMethod('post')){
+            $title = $request->get("title");
+            $content = $request->get("content");
+            $tags = $request->get("tags");
+            if($title != null && $content != null && $tags != null){
+                $tags = explode(",", $tags);
+                /*$this->forward('App\Controller\API\TipController::addTip', [
+                    'token' => $_ENV['API_TOKEN'],
+                    'title' => $title,
+                    'content' => $content,
+                    'tags' => $tags
+                ]);
+            }
+        }*/
+        
+        $tags = $this->forward('App\Controller\API\TagController::allTags', [
+            'token' => $_ENV['API_TOKEN']
+        ]);
+        return $this->render('tips/add_tip.html.twig', [
+            "tags" => $tags->getContent(),
+        ]);
+    }
 }
