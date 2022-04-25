@@ -21,6 +21,17 @@ import VueTypedJs from 'vue-typed-js'
 
 Vue.use(VueTypedJs)
 Vue.filter('pluralize', (word, amount) => (amount > 1) ? `${word}s` : word)
+import BackOffice from "./components/BackOffice.vue"
+import AdminCommentaires from "./components/backoffice/Commentaires.vue"
+import AdminUtilisateurs from "./components/backoffice/Utilisateurs.vue"
+import AddAstuce from "./components/AddAstuce.vue"
+import AdminAddTag from "./components/backoffice/AddTag.vue"
+
+import VueApexCharts  from 'vue-apexcharts'
+
+Vue.use(VueApexCharts)
+Vue.component('apexchart', VueApexCharts)
+
 new Vue({ 
     el: '#app', 
     components: {
@@ -30,6 +41,11 @@ new Vue({
         AccountLogInSignUp,
         Accueil,
         UneAstuce,
+        BackOffice,
+        AdminCommentaires,
+        AdminUtilisateurs,
+        AddAstuce,
+        AdminAddTag,
     },
     vuetify,
 })

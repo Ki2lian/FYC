@@ -49,7 +49,8 @@
 
 <script>
 import NavBar from "./component/NavBar.vue"
-import Card from "./component/Card.vue"
+// import Card from "./component/Card.vue"
+import Astuce from "./component/Astuce.vue"
 import Footer from "./component/FooterVue.vue"
 export default {
     props: {
@@ -80,7 +81,8 @@ export default {
     },
     components: {
         NavBar,
-        Card,
+        // Card,
+        Astuce,
         Footer,
     },
     mounted() {
@@ -117,6 +119,8 @@ export default {
         },
         onPageChange() {
             this.actualCards = this.sliceAllCards[this.page-1]
+            document.body.scrollTop = 0; // Safari
+            document.documentElement.scrollTop = 0; // Chrome, Firefox, IE and Opera
         }
     }
 }
