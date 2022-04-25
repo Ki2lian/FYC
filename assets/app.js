@@ -18,6 +18,7 @@ import AccountLogInSignUp from './components/AccountLogInSignUp.vue'
 import Accueil from "./components/Accueil.vue"
 import UneAstuce from "./components/UneAstuce.vue"
 import VueTypedJs from 'vue-typed-js'
+
 Vue.use(VueTypedJs)
 Vue.filter('pluralize', (word, amount) => (amount > 1) ? `${word}s` : word)
 new Vue({ 

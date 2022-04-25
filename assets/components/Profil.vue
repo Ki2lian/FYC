@@ -10,15 +10,12 @@
                 <div class="username"><img class="icon__user" src="../img/user.svg" alt="icon user">{{ user.pseudo }}</div>
                 <div class="mail"><img class="icon__mail" src="../img/mail.svg" alt="icon mail">{{ user.email }}</div>
             </div>
-            <div class="infos__block row">
-                <div class="infos__child col-md-6"><img class="icon__astuce" src="../img/astuce.svg" alt="icon astuce">
+            <div class="infos__block row mb-4">
+                <div class="infos__child col-md-4"><img class="icon__astuce" src="../img/astuce.svg" alt="icon astuce">
                     {{ user.nbTips }} {{ "astuce" | pluralize(user.nbTips) }} {{ "postée" | pluralize(user.nbTips) }}
                 </div>
-                <div class="infos__child col-md-6"><img class="icon__commentaire" src="../img/commentaire.svg" alt="icon commentaire">
-                    {{ user.nbComments }} {{ "commentaire" | pluralize(user.nbComments) }} {{ "posté" | pluralize(user.nbComments) }}
-                </div>
-                <div class="infos__child col-md-6"><div class="infos__tags">Tags des astuces postées<div class="temporary">CHARTJS</div></div></div>
-                <div class="infos__child col-md-6">
+
+                <div class="infos__child col-md-4">
                     <span>Note moyenne des annonces</span>
                     <div v-if="user.note == null">
                         <span>Aucune note</span>
@@ -30,26 +27,21 @@
                         </span>
                     </div>
                 </div>
+
+                <div class="infos__child col-md-4"><img class="icon__commentaire" src="../img/commentaire.svg" alt="icon commentaire">
+                    {{ user.nbComments }} {{ "commentaire" | pluralize(user.nbComments) }} {{ "posté" | pluralize(user.nbComments) }}
+                </div>
+
+                
             </div>
             <div class="data_users">
-                <!-- datatable temporaire avec données temporaires -->
                 <v-data-table
                     :headers="headers"
                     :items="tips"
                     :items-per-page="5"
+                    locale="fr"
                     class="elevation-1"
                 >
-                <!-- <template v-slot:body="{ desserts }">
-                    <tbody>
-                        <tr v-for="dessert in desserts" :key="dessert.id">
-                            <td>{{ dessert.title }}</td>
-                            <td>{{ dessert.isValid }}</td>
-                            <td>{{ dessert.createdDate }}</td>
-                            <td>{{ dessert.protein }}</td>
-                            <td>{{ dessert.iron }}</td>
-                        </tr>
-                    </tbody>
-                </template> -->
 
                 <template v-slot:item.ratings="{ item }">
                     <span v-html="getStars(item.ratings)"></span>
@@ -75,9 +67,8 @@
                 </template>
                 </v-data-table>
             </div>
-            <!-- Ajouter le pseudo dynamiquement -->
         </div>
-        <Footer />
+        <Footer class="mt-5" />
     </div>
 </template>
 
@@ -107,24 +98,6 @@ export default {
                 { text: 'Action',  value: 'action', sortable: false, align: 'center' },
             ],
             tips: [],
-            // desserts: [
-            //     {
-            //         id: 1,
-            //         title: 'Frozen Yogurt',
-            //         isValid: 159,
-            //         createdDate: 6.0,
-            //         protein: 4.0,
-            //         iron: '1%',
-            //     },
-            //     {
-            //         id: 2,
-            //         title: 'Ice cream sandwich',
-            //         isValid: 237,
-            //         createdDate: 9.0,
-            //         protein: 4.3,
-            //         iron: '1%',
-            //     },
-            // ],
         }
     },
     mounted() {

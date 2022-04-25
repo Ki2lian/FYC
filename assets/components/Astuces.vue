@@ -16,11 +16,6 @@
                             <input class="form-control" type="text" v-model="textSearch" placeholder="Rechercher..."/>
                         </div>
                     </div>
-                    <!-- <v-checkbox
-                    class="checkbox_search"
-                    v-model="checkbox__note"
-                    :label="'Voir les mieux notés'"
-                    ></v-checkbox> -->
                     <div class="mt-5 text-center">
                         <input type="submit" class="btn btn-primary" value="Valider" style="background-color: #5147C5;" />
                     </div>
@@ -80,7 +75,7 @@ export default {
             cards: [],
             actualCards : [],
             sliceAllCards : [],
-            nombreCartesVisible: 12,
+            nombreCartesVisible: 6,
         }
     },
     components: {

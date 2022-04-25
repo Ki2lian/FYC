@@ -49,8 +49,7 @@
           <line x1="14.31" y1="16" x2="2.83" y2="16"></line>
           <line x1="16.62" y1="12" x2="10.88" y2="21.94"></line>
         </svg>
-        <p class="footer-desc">Design site and integration by Gabin Emeric and Margotteau Joris.<br>
-           Back-end by Chadli Adel and Martignon Kilian
+        <p class="footer-desc">Développeurs: Emeric, Joris, Adel et Killian
         </p>
         <small class="d-block mb-3">&copy; 2021-2022</small>
       </div>
