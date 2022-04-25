@@ -91,12 +91,12 @@
             plugins: [
               'advlist autolink lists link image charmap print preview anchor',
               'searchreplace visualblocks code fullscreen',
-              'insertdatetime media table paste code help wordcount',
+              'insertdatetime media table paste code help wordcount codesample',
             ],
             toolbar:
               'undo redo | formatselect | bold italic backcolor | \
               alignleft aligncenter alignright alignjustify | \
-              bullist numlist outdent indent | removeformat | help',
+              bullist numlist outdent indent | removeformat | help codesample',
           }"
         />
 
@@ -138,6 +138,7 @@ export default {
   },
 
   computed:{
+    // A modifier !!!
     codeExample(){
       console.log(hljs);
       return marked('``` <div align="center">you content</div> <div id="myDiv">you content</div> ```', {
@@ -210,7 +211,6 @@ $text: #b2b2b2;
         display: inline-flex;
         .card-body {
           .logo {
-            width: 40px;
             height: 40px;
             p {
               margin-left: 10px;
@@ -269,7 +269,6 @@ $text: #b2b2b2;
           display: inline-flex;
           .card-body {
             .logo {
-              width: 40px;
               height: 40px;
               p {
                 margin-left: 10px;
