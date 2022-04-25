@@ -27,6 +27,8 @@
         "apexcharts": "^3.35.0",
         "jquery": "^3.6.0",
         "moment": "^2.29.1",
+        "highlight.js": "^11.4.0",
+        "marked": "^4.0.14",
         "sass": "^1.47.0",
         "sass-loader": "^12.4.0",
         "vue": "^2.6.14",
