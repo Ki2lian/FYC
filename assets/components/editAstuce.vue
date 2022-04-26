@@ -3,7 +3,7 @@
     <NavBar />
     <div class="title">
       <v-icon x-large class="mr-4" color="#5147C5">mdi-plus-box</v-icon>
-      <h2>Ajouter une astuce</h2>
+      <h2>Modifier une astuce</h2>
     </div>
     <v-main>
       <v-form ref="form" v-model="validForm" class="mb-4">
@@ -68,7 +68,7 @@
                   class="mr-4 mt-5"
                   @click="validate"
                 >
-                  Créer mon astuce
+                  Modifier mon astuce
                 </v-btn>
               </div>
             </v-col>
@@ -91,15 +91,29 @@
 	export default {
 		props: {
 			tagsObj: {
-			type: String,
-			default: "",
+                type: String,
+                default: "",
+			},
+			tipObj: {
+                type: String,
+                default: "",
 			},
 		},
+        beforeMount() {
+            this.tagsTemp = JSON.parse(this.tagsObj);
+            this.tip = JSON.parse(this.tipObj);
+            this.tagsTemp.forEach((tag) => {
+                this.tags.push(tag.name);
+            });
+            this.form.title = this.tip.title;
+            this.tip.tag.forEach((tag) => {
+                this.form.tags.push(tag.name);
+            });
+            this.form.content = this.tip.content;
+            
+        },
 		mounted() {
-				this.tagsTemp = JSON.parse(this.tagsObj);
-				this.tagsTemp.forEach((tag) => {
-				this.tags.push(tag.name);
-			});
+            
 		},
 		data() {
 			return {
@@ -110,6 +124,7 @@
 				},
 
 				tags: [],
+                tip: null,
 				tagsTemp: [],
 
 				validForm: true,
@@ -140,10 +155,11 @@
 				if (this.form.content == null) return;
 				const formData = new FormData();
 				formData.append("tip[title]", this.form.title);
+				formData.append("tip_id", this.tip.id);
 				formData.append("tip[content]", this.form.content);
 				formData.append("tags", this.form.tags.join(","));
 				$(".form-error").hide();
-				axios.post("/api/tip", formData, {
+				axios.post("/api/tip/edit", formData, {
 						headers: {
 							"X-Requested-With": "XMLHttpRequest",
 						},

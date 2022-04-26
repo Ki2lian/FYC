@@ -47,6 +47,24 @@ class TipRepository extends ServiceEntityRepository
                     ->getResult()
         ;
     }
+
+    public function getTipsPostedByMonth(){
+        return $this->createQueryBuilder('t')
+        ->select('MONTH(t.createdAt) AS MONTH, COUNT(t.id) AS COUNT')
+        ->where('YEAR(t.createdAt)=:year')
+        ->setParameter(':year', date("Y"))
+        ->groupBy('MONTH')
+        ->getQuery()
+        ->getResult();
+    }
+
+    public function getNbOfOwnerTip(){
+        return $this->createQueryBuilder('t')
+        ->select('COUNT(DISTINCT t.user) AS COUNT')
+        ->getQuery()
+        ->getSingleScalarResult();
+    }
+
     // /**
     //  * @return Tip[] Returns an array of Tip objects
     //  */

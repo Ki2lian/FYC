@@ -6,7 +6,7 @@
                 <p>{{ tip.comments.length }} {{ "commentaire" | pluralize(tip.comments.length) }}</p>
             </div>
             <div class="col">
-                <a href="#">{{ tip.title }}</a>
+                <a :href="'/tip/' + tip.id">{{ tip.title }}</a>
             </div>
         </div>
         <div class="row mt-0">
@@ -96,21 +96,6 @@ $background: #D8D8D8;
 .tag:hover{
     background: $background;
 }
-
-// .tags {
-//     display: flex;
-//     margin-bottom: 10px;
-// }
-
-// .tag {
-//     margin-right: 25px;
-//     padding: 5px;
-//     background: $seconday_color;
-//     border: 0.5px solid $background;
-//     box-sizing: border-box;
-//     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
-//     border-radius: 10px;
-// }
 
 .title {
     font-size: larger;

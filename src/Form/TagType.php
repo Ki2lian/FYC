@@ -23,6 +23,7 @@ class TagType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Tag::class,
+            'csrf_protection' => false,
         ]);
     }
 }
