@@ -218,7 +218,7 @@ $text: #b2b2b2;
           }
           .card-title {
             font-size: 12px;
-            color: "#494949";
+            color: "#414141";
           }
         }
       }
