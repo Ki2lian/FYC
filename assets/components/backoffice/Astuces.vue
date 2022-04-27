@@ -148,7 +148,9 @@ export default {
 			});
     },
 	validTip(tip, e) {
-		if(!window.confirm(`Voulez-vous valider cette astuce ? (${tip.title})`)){
+    var sentence = "Voulez-vous valider cette astuce ?"
+    if(!tip.isValid) sentence = "Voulez-vous ne plus afficher cette astuce ?"
+		if(!window.confirm(`${sentence} (${tip.title})`)){
 			tip.isValid = !tip.isValid;
 			return;
 		};

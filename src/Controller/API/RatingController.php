@@ -40,7 +40,7 @@ class RatingController extends AbstractController
     {
         $isAjax = $request->isXMLHttpRequest();
         if (!$isAjax) return new Response('', 404);
-
+        if($this->getUser() == null) return $this->json(["code" => 403, "message" => "Access Denied"], 403);
         $rate = new Rating();
         $form = $this->createForm(RatingType::class, $rate);
         $form->handleRequest($request);
