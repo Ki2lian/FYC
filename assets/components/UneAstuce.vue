@@ -3,119 +3,103 @@
     <NavBar class="fixed" />
 
     <div class="title d-flex">
-      <h1>L’astuce (titre de l’astuce)</h1>
-      <a href="#">Donne une astuce</a>
+      <h1>{{ tip.title }}</h1>
     </div>
 
-    <div class="row jumbotron">
-      <p class="text__trait col">Créer :</p>
-      <p class="text__trait col">Dernière activité :</p>
-      <p class="text__trait col">Vue :</p>
-      <hr class="trait my-4" />
-    </div>
+    <div class="container">
+		<div class="row jumbotron">
+		<p class="text__trait col">Auteur : {{ tip.user.pseudo }}</p>
+		<p class="text__trait col">Créer : {{ dateFromNow(tip.createdAt) }}</p>
+		<p class="text__trait col">Note : <span v-html="getStars(tip.ratings)"></span></p>
+		<hr class="trait my-4" />
+		</div>
+		<div class="body-container">
+			<div class="astuce">
+				<div v-html="tip.content"></div>
+				<div class="tags mb-4">
+					<a class="tag text-dark mb-1" :href="'/tips/tagged/' + tag.name" v-for="tag in tip.tag" :key="tag.id">{{ tag.name }}</a>
+				</div>
+				<div class="d-flex align-items-center">
+					<span class="me-1">L'astuce vous a été utile ?</span>
+					<button class="btn p-0 mx-1" @click="vote(1)"><i class="fas fa-thumbs-up text-success"></i></button>
+					<span class="mx-1">(<span>{{ note(tip.ratings) }}</span>)</span>
+					<button class="btn p-0 ms-1" @click="vote(-1)"><i class="fas fa-thumbs-down text-danger"></i></button>
+				</div>
+			</div>
+		</div>
 
-    <div class="body-container">
-      <div class="astuce">
-        <p class="astuce-text">
-          Thalassius vero ea tempestate praefectus praetorio praesens ipse
-          quoque adrogantis ingenii, considerans incitationem eius ad multorum
-          augeri discrimina, non maturitate vel consiliis mitigabat, ut
-          aliquotiens celsae potestates iras principum molliverunt, sed
-          adversando iurgandoque cum parum congrueret, eum ad rabiem potius
-          evibrabat, Augustum actus eius exaggerando creberrime docens, idque,
-          incertum qua mente, ne lateret adfectans. quibus mox Caesar acrius
-          efferatus, velut contumaciae quoddam vexillum altius erigens, sine
-          respectu salutis alienae vel suae ad vertenda opposita instar rapidi
-          fluminis irrevocabili impetu ferebatur. Intellectum est enim mihi
-          quidem in multis, et maxime in me ipso, sed paulo ante in omnibus, cum
-          M. Marcellum senatui reique publicae concessisti, commemoratis
-          praesertim offensionibus, te auctoritatem huius ordinis dignitatemque
-          rei publicae tuis vel doloribus vel suspicionibus anteferre. Ille
-          quidem fructum omnis ante actae vitae hodierno die maximum cepit, cum
-          summo consensu senatus, tum iudicio tuo gravissimo et maximo. Ex quo
-          profecto intellegis quanta in dato beneficio sit laus, cum in accepto
-          sit tanta gloria.
-        </p>
+		<div class="tips">
+			<p>{{ tip.comments.length }} {{ "réponse" | pluralize(tip.comments.length) }}</p>
+			<div class="container__tips">
 
-        <div v-html="codeExample">
+				<div v-for="comment in tip.comments" :key="comment.id">
+					<div v-html="comment.content"></div>
+					<div class="container__card">
+						<div class="card">
+							<div class="card-body">
+								<p class="card-title">Répondu {{ dateFromNow(comment.createdAt) }}</p>
+								<div class="logo d-flex">
+									<img src="../img/user-solid.svg" :alt="'Image de profil de ' + comment.user.pseudo" />
+									<p>{{ comment.user.pseudo }}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<hr class="my-12" />
+				</div>
+			</div>
+		</div>
 
-        </div>
-      </div>
+		<div class="commentaire">
+		<div class="container">
+			<p>Votre commentaire :</p>
+			<div class="alert alert-danger form-error mt-2" style="display: none;" role="alert"></div>
+			<editor
+			api-key="8gaq38a4l7phvys7xzkj0o9cu8xpkysca6vlbszoarqmeuwo"
+			id="addComment"
+			v-model="comment"
+			:init="{
+				height: 300,
+				menubar: true,
+				plugins: [
+				'advlist autolink lists link image charmap print preview anchor',
+				'searchreplace visualblocks code fullscreen',
+				'insertdatetime media table paste code help wordcount codesample',
+				],
+				toolbar:
+				'undo redo | formatselect | bold italic backcolor | \
+				alignleft aligncenter alignright alignjustify | \
+				bullist numlist outdent indent | removeformat | help codesample',
+				codesample_languages: [
+					{text: 'HTML/XML', value: 'html'},
+					{text: 'JavaScript', value: 'javascript'},
+					{text: 'CSS', value: 'css'},
+					{text: 'PHP', value: 'php'},
+					{text: 'Ruby', value: 'ruby'},
+					{text: 'Python', value: 'python'},
+					{text: 'Java', value: 'java'},
+					{text: 'C', value: 'c'},
+					{text: 'C#', value: 'csharp'},
+					{text: 'C++', value: 'cpp'}
+				],
+			}"
+			/>
 
-      <div class="container__card">
-        <div class="card">
-          <div class="card-body">
-            <p class="card-title">Publié le 2 janv à 13h50</p>
-            <div class="logo d-flex">
-              <img src="../img/user-solid.svg" alt="" />
-              <p>Emeric GABIN</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+			<div class="text-privacy d-flex flex-column justify-content-center align-items-center">
+				<button class="btn btn-add-comment" @click="addComment">Commenter</button>
+				<div class="">
+					<p>
+					En cliquant sur "Commenter", vous acceptez notre
+					<a href="#"> politique de confidentialité </a> et notre
+					<a href=""> politique en matière de cookies</a>.
+					</p>
+				</div>
+			</div>
+		</div>
+		</div>
 
-    <div class="tips">
-      <p>Nombre de commentaire 1</p>
-      <div class="container__tips">
-        <p class="desc__tips">
-          Altiora gestis artissime conpertis an agens qui agens gener tenebatur
-          exindeque ad meditantis qui paulo altiora ad conpertis ante iam.
-        </p>
+	</div>
 
-        <div class="container__card">
-          <div class="card">
-            <div class="card-body">
-              <p class="card-title">Publié le 2 janv à 13h50</p>
-              <div class="logo d-flex">
-                <img src="../img/user-solid.svg" alt="" />
-                <p>Emeric GABIN</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <hr class="my-12" />
-      </div>
-    </div>
-
-    <div class="commentaire">
-      <div class="container">
-        <p>Votre commentaire :</p>
-
-        <editor
-          api-key="no-api-key"
-          :init="{
-            height: 500,
-            menubar: true,
-            plugins: [
-              'advlist autolink lists link image charmap print preview anchor',
-              'searchreplace visualblocks code fullscreen',
-              'insertdatetime media table paste code help wordcount codesample',
-            ],
-            toolbar:
-              'undo redo | formatselect | bold italic backcolor | \
-              alignleft aligncenter alignright alignjustify | \
-              bullist numlist outdent indent | removeformat | help codesample',
-          }"
-        />
-
-        <div
-          class="text-privacy d-flex justify-content-center align-items-center"
-        >
-          <div class="btn">
-            <a href="#">Commenter</a>
-          </div>
-          <div class="">
-            <p>
-              En cliquant sur "Commenter", vous acceptez notre
-              <a href="#"> politique de confidentialité </a> et notre
-              <a href=""> politique en matière de cookies </a>.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <Footer />
   </div>
@@ -127,27 +111,110 @@ import Footer from "./component/FooterVue.vue";
 import Editor from "@tinymce/tinymce-vue";
 import hljs from "highlight.js";
 import 'highlight.js/styles/stackoverflow-light.css';
-import { marked } from 'marked';
+import * as moment from 'moment'
+import axios from "axios";
+moment.locale("fr")
 
 export default {
-  components: {
-    NavBar,
-    Footer,
-    editor: Editor,
-    hljs,
-  },
+	props: {
+		tipObj: {
+			type: String,
+			default: "",
+		},
+	},
+	data() {
+		return {
+			tip: {},
+			comment: null,
+		};
+	},
+  	components: {
+		NavBar,
+		Footer,
+		editor: Editor,
+		hljs,
+  	},
+  	beforeMount() {
+		this.tip = JSON.parse(this.tipObj);
+	},
+	mounted() {
+		hljs.highlightAll();
+		console.log(this.tip)
+	},
+	methods: {
+        dateFromNow(date) {
+            return moment(date).fromNow();
+        },
+		getStars(ratings) {
+            let note = 0
+            ratings.forEach(rating => note += rating.value)
+            let average = Math.round((note / ratings.length) * 5)
 
-  computed:{
-    // A modifier !!!
-    codeExample(){
-      console.log(hljs);
-      return marked('``` <div align="center">you content</div> <div id="myDiv">you content</div> ```', {
-        hljs(md){
-          return hljs.highlightAuto(md).value
-        }
-      });
-    }
-  }
+            let html = ''
+            for (let i = 1; i <= 5; i++) {
+                if(i <= average) html += '<i class="fas fa-star fa-lg" style="color: #FFD700; filter: drop-shadow(0px 0px 2px #000);"></i>'
+                else html += '<i class="far fa-star fa-lg" style="color: #FFD700; filter: drop-shadow(0px 0px 2px #000);"></i>'
+            }
+            return html
+        },
+		addComment() {
+			if (this.comment == null) return;
+			$(".form-error").hide();
+			const formData = new FormData();
+			formData.append("comment[content]", this.comment);
+			formData.append("tip_id", this.tip.id);
+			axios.post("/api/comment", formData, {
+						headers: {
+							"X-Requested-With": "XMLHttpRequest",
+						},
+					})
+				.then(res => {
+					const response = res.data;
+					if(!response.errors){
+						this.tip.comments.push(response.info);
+						setTimeout(() => {
+							hljs.highlightAll();
+						}, 1);
+						tinymce.get("addComment").setContent("<p></p>");
+					}else{
+						var errorsHtml = "";
+						response.errors.forEach((error) => errorsHtml += `<li>${error.message}</li>`);
+						$(".form-error").html(`<ul>${errorsHtml}</ul>`);
+						$(".form-error").slideDown();
+					}
+				})
+			
+		},
+		vote(number) {
+			const formData = new FormData();
+			formData.append("tip_id", this.tip.id);
+			formData.append("rating[value]", number);
+			axios.post("/api/rating", formData, {
+						headers: {
+							"X-Requested-With": "XMLHttpRequest",
+						},
+					})
+				.then(res => {
+					const response = res.data;
+					this.tip.ratings.forEach((rating, idx) => {
+						if(rating.user.id == response.info.user.id) {
+							rating.value = response.info.value;
+						}
+						else if(idx == this.tip.ratings.length - 1){
+							this.tip.ratings.push(response.info);
+						}
+					})
+				})
+		},
+		note(ratings){
+			let note = 0
+			ratings.forEach(rating => note += rating.value)
+			return note
+		},
+    },
+
+  	computed:{
+  	}
 };
 </script>
 
@@ -156,6 +223,32 @@ $background: #d8d8d8;
 $seconday_color: #eeeeee;
 $interactive_text: #5147c5;
 $text: #b2b2b2;
+
+.btn-add-comment{
+	background: $interactive_text;
+	color: $seconday_color;
+}
+
+.tags .tag:hover{
+    color: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.tag {
+    margin: 0px 10px 10px 0px;
+    padding: 5px;
+    background: $seconday_color;
+    border: 0.5px solid $background;
+    box-sizing: border-box;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+	color: $interactive_text;
+    text-decoration: none;
+}
+
+.tag:hover{
+    background: $background;
+}
 
 .container__astuce {
   .title {

@@ -45,8 +45,8 @@ class RatingController extends AbstractController
         $form = $this->createForm(RatingType::class, $rate);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            $tip = $tipr->find($request->get("id"));
-            if($tip == null) {
+            $tip = $tipr->find($request->get("tip_id"));
+            if($tip == null || !$tip->getIsValid()) {
                 return $this->json(array(
                     "code" => 404,
                     "errors" => "La note n'a pas été ajouté car l'astuce n'existe pas ou n'existe plus"
@@ -54,18 +54,13 @@ class RatingController extends AbstractController
             }
             $rate->setTip($tip);
             $rate->setUser($this->getUser());
-
-            //Pour postman:
-            //$rate->setUser($ur->find($request->get('id_user')));
             
             $note = $tip->getRatings();
             foreach($note as $n){
                 $user = $n->getUser();
                 if($ur->find($this->getUser()->getId() == $user->getId())){
-                    return $this->json(array(
-                        "code" => 403,
-                        "errors" => "La note n'a pas été ajouté car l'utilisateur à déjà noté cette astuce'"
-                    ),403); 
+                    $entityManager->remove($n);
+                    break;
                 }
             }
 
@@ -77,7 +72,10 @@ class RatingController extends AbstractController
                 "info" => array(
                     "id" => $rate->getId(),
                     "value" => $rate->getValue(),
-                    "createdAt" => $rate->getCreatedAt()
+                    "user" => array(
+                        "pseudo" => $rate->getUser()->getPseudo(),
+                        "id" => $rate->getUser()->getId()
+                    )
                 )
             ], 200);
         }

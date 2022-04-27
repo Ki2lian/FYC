@@ -23,7 +23,7 @@ class RatingType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Rating::class,
-            //'csrf_protection' => false,
+            'csrf_protection' => false,
         ]);
     }
 }

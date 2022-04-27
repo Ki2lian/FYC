@@ -23,7 +23,7 @@ class Comment
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["data-comment"])]
+    #[Groups(["data-comment", "data-tip"])]
     private $user;
 
     #[ORM\ManyToOne(targetEntity: Tip::class, inversedBy: 'comments')]

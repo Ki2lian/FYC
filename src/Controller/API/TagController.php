@@ -44,6 +44,13 @@ class TagController extends AbstractController
     {
         $isAjax = $request->isXMLHttpRequest();
         if (!$isAjax) return new Response('', 404);
+        if(!$this->isGranted('ROLE_ADMIN')){
+            return $this->json([
+                "code" => 403,
+                "message" => "Vous n'avez pas l'autorisation de supprimer ce tag"
+            ], 403);
+        }
+        
         $tag = new Tag();
         $form = $this->createForm(TagType::class, $tag);
         $form->handleRequest($request);
@@ -55,14 +62,16 @@ class TagController extends AbstractController
                 "message" => "Tag ajouté",
                 "info" => array(
                     "id" => $tag->getId(),
-                    "name" => $tag->getName()
+                    "name" => $tag->getName(),
+                    "tips" => [],
+                    "createdAt" => $tag->getCreatedAt(),
                 )
             ], 200);
         }
         return $this->json(array(
             "code" => 200,
             "errors" => $form->getErrors()
-        ),200);
+        ), 404);
     }
 
     #[Route('', name: 'api_edit_tag', methods: ['PUT'])]
@@ -99,18 +108,25 @@ class TagController extends AbstractController
         ),200);
     }
 
-    #[Route('', name: 'api_delete_tag', methods: ['DELETE'])]
-    public function deleteTag(EntityManagerInterface $entityManager, Request $request, TagRepository $tr): Response
+    #[Route('/{id}', name: 'api_delete_tag', methods: ['DELETE'])]
+    public function deleteTag(EntityManagerInterface $entityManager, Request $request, TagRepository $tr, $id=0): Response
     {
         $isAjax = $request->isXMLHttpRequest();
         if (!$isAjax) return new Response('', 404);
 
-        $tag = $tr->find($request->get('id'));
+        $tag = $tr->find($id);
         if($tag === null){
             return $this->json([
                 "code" => 404,
                 "message" => "Tag non trouvé, id manquant ou id inexistant"
             ], 404);
+        }
+
+        if(!$this->isGranted('ROLE_ADMIN')){
+            return $this->json([
+                "code" => 403,
+                "message" => "Vous n'avez pas l'autorisation de supprimer ce tag"
+            ], 403);
         }
     
         $entityManager->remove($tag);

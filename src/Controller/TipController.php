@@ -65,26 +65,59 @@ class TipController extends AbstractController
         if($this->getUser() == null) {
             return $this->redirectToRoute('account');
         }
-        /*if($request->isMethod('post')){
-            $title = $request->get("title");
-            $content = $request->get("content");
-            $tags = $request->get("tags");
-            if($title != null && $content != null && $tags != null){
-                $tags = explode(",", $tags);
-                /*$this->forward('App\Controller\API\TipController::addTip', [
-                    'token' => $_ENV['API_TOKEN'],
-                    'title' => $title,
-                    'content' => $content,
-                    'tags' => $tags
-                ]);
-            }
-        }*/
         
         $tags = $this->forward('App\Controller\API\TagController::allTags', [
             'token' => $_ENV['API_TOKEN']
         ]);
         return $this->render('tips/add_tip.html.twig', [
             "tags" => $tags->getContent(),
+        ]);
+    }
+
+    #[Route('/edit_tip/{id}', name: 'edit_tip')]
+    public function editTip(Request $request, $id = 0, TipRepository $tr): Response
+    {
+        if($this->getUser() == null) {
+            return $this->redirectToRoute('account');
+        }
+        $tip = $tr->find($id);
+        if($tip === null || (!$this->isGranted('ROLE_ADMIN') && $tip->getUser() != $this->getUser())){
+            return $this->redirectToRoute('tips');
+        }
+        
+        
+        $tags = $this->forward('App\Controller\API\TagController::allTags', [
+            'token' => $_ENV['API_TOKEN']
+        ]);
+        $tip = $this->json($tip, 200 , [], ['groups' => "data-tip"])->getContent();
+        return $this->render('tips/edit_tip.html.twig', [
+            "tags" => $tags->getContent(),
+            "tip" => $tip
+        ]);
+    }
+
+    #[Route('/tip/{id}', name: 'show_tip')]
+    public function showTip($id = 0): Response
+    {
+        if($id == 0) {
+            return $this->redirectToRoute('tips');
+        }
+
+        $tip = $this->forward('App\Controller\API\TipController::tip', [
+            'token' => $_ENV['API_TOKEN'],
+            'id' => $id
+        ]);
+
+        $tipObject = json_decode($tip->getContent(), true);
+        if( $this->getUser() == null && !$tipObject["isValid"] ||
+            $this->getUser()->getId() != $tipObject["user"]["id"]) {
+                if(!$this->isGranted('ROLE_ADMIN')){
+                    return $this->redirectToRoute('tips');
+                }
+        }
+        
+        return $this->render('tips/show_tip.html.twig', [
+            "tip" => $tip->getContent()
         ]);
     }
 }

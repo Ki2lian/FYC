@@ -37,25 +37,37 @@ class CommentController extends AbstractController
     #[Route('', name: 'api_add_comment', methods: ['POST'])]
     public function addComment(EntityManagerInterface $entityManager, Request $request, TipRepository $tipr, UserRepository $ur): Response
     {
-        // $isAjax = $request->isXMLHttpRequest();
-        // if (!$isAjax) return new Response('', 404);
+        $isAjax = $request->isXMLHttpRequest();
+        if (!$isAjax) return new Response('', 404);
+        if($this->getUser() == null){
+            return $this->json(array(
+                "code" => 404,
+                "errors" => array(
+                    (object) array(
+                        "message" => "Vous devez être connecté pour poster un commentaire"
+                    )
+                )
+            ),200);
+        }
 
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            $tip = $tipr->find($request->get("id"));
-            if($tip == null) {
+            $tip = $tipr->find($request->get("tip_id"));
+            if($tip == null || !$tip->getIsValid()) {
                 return $this->json(array(
                     "code" => 404,
-                    "errors" => "Le commentaire n'a pas été ajouté car l'astuce n'existe pas ou n'existe plus"
-                ),404); 
+                    "errors" => array(
+                        (object) array(
+                            "message" => "Le commentaire n'a pas été ajouté car l'astuce n'existe pas ou n'existe plus"
+                        )
+                    )
+                ),200); 
             }
             $comment->setTip($tip);
             $comment->setUser($this->getUser());
-
-            $comment->setUser($ur->find($request->get('id_user')));
-
+            // $comment->setUser($ur->find($request->get('id_user')));
 
             $entityManager->persist($comment);
             $entityManager->flush();
@@ -65,7 +77,11 @@ class CommentController extends AbstractController
                 "info" => array(
                     "id" => $comment->getId(),
                     "content" => $comment->getContent(),
-                    "createdAt" => $comment->getCreatedAt()
+                    "createdAt" => $comment->getCreatedAt(),
+                    "user" => (object)[
+                        "id" => $comment->getUser()->getId(),
+                        "pseudo" => $comment->getUser()->getPseudo(),
+                    ]
                 )
             ], 200);
         }

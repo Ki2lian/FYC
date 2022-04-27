@@ -36,6 +36,7 @@ class Tag
     private $updatedAt;
 
     #[ORM\ManyToMany(targetEntity: Tip::class, mappedBy: 'tag')]
+    #[Groups(["data-tag"])]
     private $tips;
 
     public function __construct()

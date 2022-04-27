@@ -25,10 +25,17 @@ class TipController extends AbstractController
         return $this->json(["code" => 403, "message" => "Access Denied"], 403);
     }
 
-    #[Route('s/{token}', name: 'api_all_tags', methods: ['GET'])]
+    #[Route('s/{token}', name: 'api_tips_all_valid', methods: ['GET'])]
     public function allTips(TipRepository $tr, string $token): Response
     {
         if ($token === $_ENV['API_TOKEN']) return $this->json($tr->findBy(array("isValid" => 1), array('id' => 'DESC')), 200, [], ['groups' => "data-tip"]);
+        return $this->json(["code" => 403, "message" => "Access Denied"], 403);
+    }
+
+    #[Route('s/dashboard/{token}', name: 'api_tips_all_dashboard', methods: ['GET'])]
+    public function allTipsDashboard(TipRepository $tr, string $token): Response
+    {
+        if ($token === $_ENV['API_TOKEN']) return $this->json($tr->findBy(array(), array('id' => 'DESC')), 200, [], ['groups' => "data-tip"]);
         return $this->json(["code" => 403, "message" => "Access Denied"], 403);
     }
 
@@ -59,6 +66,7 @@ class TipController extends AbstractController
     {
         $isAjax = $request->isXMLHttpRequest();
         if (!$isAjax) return new Response('', 404);
+
         $tags = $request->get("tags");
         $tip = new Tip();
         $form = $this->createForm(TipType::class, $tip);
@@ -80,9 +88,7 @@ class TipController extends AbstractController
                 "code" => 200, 
                 "message" => "Astuce ajoutée",
                 "info" => array(
-                    "id" => $tip->getId(),
-                    "title" => $tip->getTitle(),
-                    "content" => $tip->getContent()
+                    "id" => $tip->getId()
                 )
             ], 200);
         }
@@ -92,39 +98,55 @@ class TipController extends AbstractController
         ),200);
     }
 
-    #[Route('', name: 'api_edit_tip', methods: ['PUT'])]
-    public function editTip(EntityManagerInterface $entityManager, Request $request, TipRepository $tr): Response
+    #[Route('/edit', name: 'api_edit_tip', methods: ['POST'])]
+    public function editTip(EntityManagerInterface $entityManager, Request $request, TipRepository $tr, TagRepository $tagr): Response
     {
         $isAjax = $request->isXMLHttpRequest();
         if (!$isAjax) return new Response('', 404);
 
-        $tip = $tr->find($request->get('id'));
-        
+        $tags = $request->get("tags");
+        $tip = $tr->find($request->get('tip_id'));
         if($tip === null){
             return $this->json([
                 "code" => 404,
-                "message" => "Astuce non trouvé, id manquant ou id inexistant"
+                "message" => "Astuce non trouvée, id manquant ou id inexistant"
             ], 404);
         }
 
-        $form = $this->createForm(TipType::class, $tip, array('method' => 'PUT'));
+        $form = $this->createForm(TipType::class, $tip);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            if($tip->getUser() != $this->getUser()){
+            if(!$this->isGranted('ROLE_ADMIN') && $tip->getUser() != $this->getUser()){
                 return $this->json([
                     "code" => 403,
                     "message" => "Vous n'avez pas l'autorisation de modifier cette astuce"
                 ], 403);
             }
-            //$rate->setUser($this->getUser());
+            $tags = explode(",", $tags);
+            $tagsTempTip = [];
+            // Parcours les tags existants, si le tag n'existe pas dans le tableau récupérer, on le supprime
+            foreach ($tip->getTag() as $key => $tag) {
+                if(!in_array($tag->getName(), $tags)){
+                    $tip->removeTag($tag);
+                }
+                array_push($tagsTempTip, $tag->getName());
+            }
+
+            // On ajoute les nouveaux tags s'il n'existe pas déjà
+            foreach ($tags as $key => $tag) {
+                $tag = $tagr->findBy(array("name" => $tag));
+                if(!in_array($tag[0]->getName(), $tagsTempTip)){
+                    $tip->addTag($tag[0]);
+                }
+            }
             $tip->setUpdatedAt(new \DateTime());
             $entityManager->flush();
             return $this->json([
                 "code" => 200,
-                "message" => "Astuce modifié",
+                "message" => "Astuce modifiée",
                 "info" => array(
-                    "title" => $tip->getTitle()
+                    "id" => $tip->getId()
                 )
             ], 200);
         }
@@ -134,18 +156,31 @@ class TipController extends AbstractController
         ),200);
     }
 
-    #[Route('', name: 'api_delete_tip', methods: ['DELETE'])]
-    public function deleteTip(EntityManagerInterface $entityManager, Request $request, TipRepository $tr): Response
+    #[Route('/{id}', name: 'api_delete_tip', methods: ['DELETE'])]
+    public function deleteTip(EntityManagerInterface $entityManager, Request $request, TipRepository $tr, $id=0): Response
     {
-        // $isAjax = $request->isXMLHttpRequest();
-        // if (!$isAjax) return new Response('', 404);
-
-        $tip = $tr->find($request->get('id'));
+        $isAjax = $request->isXMLHttpRequest();
+        if (!$isAjax) return new Response('', 404);
+        $tip = $tr->find($id);
         if($tip === null){
             return $this->json([
                 "code" => 404,
-                "message" => "Astuce non trouvé, id manquant ou id inexistant"
-            ], 404);
+                "errors" => array(
+                    (object) array(
+                        "message" => "Astuce non trouvée, id manquant ou id inexistant. Si vous pensez que c'est une erreur, veuillez contacter un administrateur"
+                    )
+                )
+            ], 200);
+        }
+        if(!$this->isGranted('ROLE_ADMIN') && $tip->getUser() != $this->getUser()){
+            return $this->json([
+                "code" => 403,
+                "errors" => array(
+                    (object) array(
+                        "message" => "Vous n'avez pas l'autorisation de supprimer cette astuce"
+                    )
+                )
+            ], 200);
         }
         $entityManager->remove($tip);
         $entityManager->flush();

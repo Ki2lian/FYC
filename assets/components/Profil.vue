@@ -12,8 +12,9 @@
                 <a href="/logout" class="btn btn-primary btn-logout">Se déconnecter</a>
             </div>
             <div class="infos__block row mb-4">
-                <div class="infos__child col-md-4"><img class="icon__astuce" src="../img/astuce.svg" alt="icon astuce">
-                    {{ user.nbTips }} {{ "astuce" | pluralize(user.nbTips) }} {{ "postée" | pluralize(user.nbTips) }}
+                <div class="infos__child col-md-4">
+                    <img class="icon__astuce" src="../img/astuce.svg" alt="icon astuce">
+                    <span class="tipsPosted">{{ user.nbTips }} {{ "astuce" | pluralize(user.nbTips) }} {{ "postée" | pluralize(user.nbTips) }}</span>
                 </div>
 
                 <div class="infos__child col-md-4">
@@ -32,10 +33,11 @@
                 <div class="infos__child col-md-4"><img class="icon__commentaire" src="../img/commentaire.svg" alt="icon commentaire">
                     {{ user.nbComments }} {{ "commentaire" | pluralize(user.nbComments) }} {{ "posté" | pluralize(user.nbComments) }}
                 </div>
-
+    
                 
             </div>
             <div class="data_users">
+                <div class="alert alert-danger form-error mt-3" style="display: none;" role="alert"></div>
                 <v-data-table
                     :headers="headers"
                     :items="tips"
@@ -64,7 +66,7 @@
                 <template v-slot:item.action="{ item }">
                     <button class="btn p-1" @click="showTip(item)"><i class="fas fa-eye text-secondary"></i></button>
                     <button class="btn p-1" @click="editTip(item)"><i class="fas fa-edit text-primary"></i></button>
-                    <button class="btn p-1" @click="deleteTip(item.id)"><i class="fas fa-trash text-danger"></i></button>
+                    <button class="btn p-1" @click="deleteTip(item)"><i class="fas fa-trash text-danger"></i></button>
                 </template>
                 </v-data-table>
             </div>
@@ -76,6 +78,7 @@
 <script>
 import NavBar from "./component/NavBar.vue"
 import Footer from "./component/FooterVue.vue"
+import axios from "axios";
 export default {
     props: {
         appUser: {
@@ -104,7 +107,6 @@ export default {
     mounted() {
         this.user = JSON.parse(this.appUser)
         this.tips = this.user.tips
-        console.log(this.user.tips)
     },
     methods: {
         getStars(ratings) {
@@ -127,13 +129,34 @@ export default {
             return `${day}/${month}/${year}`
         },
         showTip(tip) {
-            window.location.href = `/tip/${tip.id}`
+            window.open(
+                `/tip/${tip.id}`,
+                '_blank'
+            );
         },
         editTip(tip) {
             // page de modification
         },
-        deleteTip(id) {
-            // window confirm puis call API
+        deleteTip(tip) {
+            if(!window.confirm(`Voulez-vous vraiment supprimer cette astuce ? (${tip.title})`)) return;
+            const formData = new FormData();
+            formData.append('id', tip.id)
+            axios.delete(`/api/tip/${tip.id}`, { headers: {"X-Requested-With": "XMLHttpRequest"} })
+                .then(res => {
+                    const response = res.data;
+                    if(!response.errors){
+                        this.tips = this.tips.filter(t => t.id !== tip.id)
+                        const pluralize = this.tips.length > 1 ? 's' : ''
+                        $(".tipsPosted").html(`
+                            ${this.tips.length} astuce${pluralize} postée${pluralize}
+                        `);
+                    }else{
+                        var errorsHtml = "";
+                        response.errors.forEach((error) => errorsHtml += `<li>${error.message}</li>`);
+                        $(".form-error").html(`<ul>${errorsHtml}</ul>`);
+                        $(".form-error").slideDown();
+                    }
+                });
         }
     },
 }
