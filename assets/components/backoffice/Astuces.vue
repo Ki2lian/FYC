@@ -47,6 +47,7 @@
           <template v-slot:item.action="{ item }">
             <div class="d-flex align-items-center">
               <button class="btn p-1" @click="showTip(item)"><i class="fas fa-eye text-secondary"></i></button>
+              <button class="btn p-1" @click="editTip(item)"><i class="fas fa-edit text-primary"></i></button>
               <v-simple-checkbox
                 @click.prevent="validTip(item, $event)"
                 v-model="item.isValid"
@@ -120,6 +121,12 @@ export default {
     showTip(tip) {
         window.open(
             `/tip/${tip.id}`,
+            '_blank'
+        );
+    },
+    editTip(tip) {
+        window.open(
+            `/edit_tip/${tip.id}`,
             '_blank'
         );
     },

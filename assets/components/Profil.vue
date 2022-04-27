@@ -135,7 +135,10 @@ export default {
             );
         },
         editTip(tip) {
-            // page de modification
+            window.open(
+                `/edit_tip/${tip.id}`,
+                '_blank'
+            );
         },
         deleteTip(tip) {
             if(!window.confirm(`Voulez-vous vraiment supprimer cette astuce ? (${tip.title})`)) return;

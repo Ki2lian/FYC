@@ -110,7 +110,7 @@ class TipController extends AbstractController
 
         $tipObject = json_decode($tip->getContent(), true);
         if( $this->getUser() == null && !$tipObject["isValid"] ||
-            $this->getUser()->getId() != $tipObject["user"]["id"]) {
+            $this->getUser() != null && $this->getUser()->getId() != $tipObject["user"]["id"] && !$tipObject["isValid"]) {
                 if(!$this->isGranted('ROLE_ADMIN')){
                     return $this->redirectToRoute('tips');
                 }

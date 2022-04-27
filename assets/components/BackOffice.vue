@@ -14,7 +14,7 @@
 					<div class="card-body text-center">
 						<i class="fas fa-users text-muted h4"></i>
 						<h3><span>{{ chartsData.users.nb_users }}</span></h3>
-						<p class="text-muted font-15 mb-0">Utilisateurs</p>
+						<p class="text-muted font-15 mb-0">{{ "Utilisateur" | pluralize(chartsData.users.nb_users) }}</p>
 					</div>
 				</div>
 			</div>
@@ -23,7 +23,7 @@
 					<div class="card-body text-center">
 						<i class="fas fa-lightbulb text-muted h4"></i>
 						<h3><span>{{ chartsData.tips.nb_tips }}</span></h3>
-						<p class="text-muted font-15 mb-0">Astuces</p>
+						<p class="text-muted font-15 mb-0">{{ "Astuce" | pluralize(chartsData.tips.nb_tips) }}</p>
 					</div>
 				</div>
 			</div>
@@ -32,7 +32,7 @@
 					<div class="card-body text-center">
 						<i class="fas fa-tags text-muted h4"></i>
 						<h3><span>{{ chartsData.tags.nb_tags }}</span></h3>
-						<p class="text-muted font-15 mb-0">Tags</p>
+						<p class="text-muted font-15 mb-0">{{ "Tag" | pluralize(chartsData.tags.nb_tags) }}</p>
 					</div>
 				</div>
 			</div>
@@ -41,7 +41,7 @@
 					<div class="card-body text-center">
 						<i class="fas fa-comments text-muted h4"></i>
 						<h3><span>{{ chartsData.comments.nb_comments }}</span></h3>
-						<p class="text-muted font-15 mb-0">Commentaires</p>
+						<p class="text-muted font-15 mb-0">{{ "Commentaire" | pluralize(chartsData.comments.nb_comments) }}</p>
 					</div>
 				</div>
 			</div>
@@ -135,7 +135,6 @@ export default {
 			showForSingleSeries: true,
 			position: 'bottom'
 		}
-		console.log(this.chartsData)
 		this.getBarChart(
 			"chart-utilisateurs",
 			"Utilisateurs",

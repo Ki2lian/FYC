@@ -10,6 +10,7 @@
 		<div class="row jumbotron">
 		<p class="text__trait col">Auteur : {{ tip.user.pseudo }}</p>
 		<p class="text__trait col">Créer : {{ dateFromNow(tip.createdAt) }}</p>
+		<p class="text__trait col">Modifier : {{ dateFromNow(tip.updatedAt) }}</p>
 		<p class="text__trait col">Note : <span v-html="getStars(tip.ratings)"></span></p>
 		<hr class="trait my-4" />
 		</div>
@@ -139,7 +140,6 @@ export default {
 	},
 	mounted() {
 		hljs.highlightAll();
-		console.log(this.tip)
 	},
 	methods: {
         dateFromNow(date) {
@@ -203,7 +203,8 @@ export default {
 						else if(idx == this.tip.ratings.length - 1){
 							this.tip.ratings.push(response.info);
 						}
-					})
+					});
+					if(this.tip.ratings.length == 0) this.tip.ratings.push(response.info);
 				})
 		},
 		note(ratings){
