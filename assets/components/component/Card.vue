@@ -13,7 +13,7 @@
             <div class="col-2 ms-5"></div>
             <div class="col">
                 <div class="d-flex justify-content-between" :class="tip.tag.length > 0 ? 'mb-3' : ''">
-                    <div class="tags w-75">
+                    <div class="tags w-50">
                         <a class="tag text-dark mb-1" :href="'/tips/tagged/' + tag.name" v-for="tag in tip.tag" :key="tag.id">{{ tag.name }}</a>
                     </div>
                     <p></p>
