@@ -13,7 +13,6 @@ import vuetify from "./plugins/vuetify.js"
 import Vue from 'vue'
 import Astuces from "./components/Astuces.vue"
 import Profil from "./components/Profil.vue"
-import Tag from './components/Tag.vue'
 import AccountLogInSignUp from './components/AccountLogInSignUp.vue'
 import Accueil from "./components/Accueil.vue"
 import UneAstuce from "./components/UneAstuce.vue"
@@ -22,7 +21,6 @@ import VueTypedJs from 'vue-typed-js'
 Vue.use(VueTypedJs)
 Vue.filter('pluralize', (word, amount) => (amount > 1) ? `${word}s` : word)
 import BackOffice from "./components/BackOffice.vue"
-import AdminCommentaires from "./components/backoffice/Commentaires.vue"
 import AdminAstuces from "./components/backoffice/Astuces.vue"
 import AddAstuce from "./components/AddAstuce.vue"
 import EditAstuce from "./components/EditAstuce.vue"
@@ -38,12 +36,10 @@ new Vue({
     components: {
         Astuces,
         Profil,
-        Tag,
         AccountLogInSignUp,
         Accueil,
         UneAstuce,
         BackOffice,
-        AdminCommentaires,
         AdminAstuces,
         AddAstuce,
         EditAstuce,

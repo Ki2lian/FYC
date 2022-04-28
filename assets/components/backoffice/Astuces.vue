@@ -47,6 +47,7 @@
           <template v-slot:item.action="{ item }">
             <div class="d-flex align-items-center">
               <button class="btn p-1" @click="showTip(item)"><i class="fas fa-eye text-secondary"></i></button>
+              <button class="btn p-1" @click="editTip(item)"><i class="fas fa-edit text-primary"></i></button>
               <v-simple-checkbox
                 @click.prevent="validTip(item, $event)"
                 v-model="item.isValid"
@@ -123,6 +124,12 @@ export default {
             '_blank'
         );
     },
+    editTip(tip) {
+        window.open(
+            `/edit_tip/${tip.id}`,
+            '_blank'
+        );
+    },
     deleteTip(tip) {
         if(!window.confirm(`Voulez-vous vraiment supprimer cette astuce ? (${tip.title})`)) return;
 		const formData = new FormData();
@@ -141,7 +148,9 @@ export default {
 			});
     },
 	validTip(tip, e) {
-		if(!window.confirm(`Voulez-vous valider cette astuce ? (${tip.title})`)){
+    var sentence = "Voulez-vous valider cette astuce ?"
+    if(!tip.isValid) sentence = "Voulez-vous ne plus afficher cette astuce ?"
+		if(!window.confirm(`${sentence} (${tip.title})`)){
 			tip.isValid = !tip.isValid;
 			return;
 		};
