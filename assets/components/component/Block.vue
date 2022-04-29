@@ -4,15 +4,16 @@
       <img class="img-block" src="../../img/block_home.svg" alt="img_block" />
       <div class="contenu">
         <h1 class="title">FYC.</h1>
-        <p class="text">
-          <span>Capturez les connaissances et les solutions pour </span>débloquer
-          votre développement <span>et</span> partager vos astuces au monde en
-          entier.
-        </p>
-        <div class="btn">
-          <a href="#" ref="urlAllTips">Faire un tour des astuces</a>
+        <div>
+            <p class="text">
+                <span>Capturez les connaissances et les solutions pour </span
+                >débloquer votre développement <span>et</span> partager vos astuces au
+                monde en entier.
+            </p>
         </div>
-        <div class="card__container row">
+        
+        <a class="btn" href="#" ref="urlAllTips">Faire un tour des astuces</a>
+        <div class="card__container d-inline-flex text-center">
           <div class="card col">
             <img class="vector" src="../../img/Vector.svg" alt="vector" />
             <h1>Augmentation de la productivité</h1>
@@ -22,13 +23,15 @@
             </p>
           </div>
           <div class="card col">
-            <img class="vector" src="../../img/Vector.svg" alt="vector" />
-            <h1>Collectif</h1>
-            <p>
-              Aide à trouver des réponses fiables plus rapidement, à dialoguer
-              avec des experts en produits et à partager des connaissances sur
-              les technologies que vous utilisez le plus.
-            </p>
+              <div>
+                <img class="vector" src="../../img/Vector.svg" alt="vector" />
+                <h1>Collectif</h1>
+                <p>
+                    Aide à trouver des réponses fiables plus rapidement, à dialoguer
+                    avec des experts en produits et à partager des connaissances sur
+                    les technologies que vous utilisez le plus.
+                </p>
+              </div>
           </div>
           <div class="card col">
             <img class="vector" src="../../img/Vector.svg" alt="vector" />
@@ -49,13 +52,13 @@ export default {
   name: "block",
   props: {
     urlalltips: {
-        type: String,
-        default: ""
+      type: String,
+      default: "",
     },
   },
   mounted() {
-      this.$refs.urlAllTips.href = this.urlalltips
-    }
+    this.$refs.urlAllTips.href = this.urlalltips;
+  },
 };
 </script>
 
@@ -94,49 +97,49 @@ $text: #b2b2b2;
       transform: translate(-50%, -50%);
       .card__container {
         position: absolute;
-        top: 270px;
-        left: 51%;
+        top: 310px;
+        left: 50%;
         transform: translate(-50%);
-        @media only screen and (max-width: 1540px) {
-          top: 138px;
-          font-size: 10px;
-          width: 650px;
-          height: 10px;
-          left: 53%;
+        @media only screen and (max-width: 1400px) {
+          top: 277px;
+        }
+        @media only screen and (max-width: 1200px) {
+            top: 241px;;
+        }
+        @media only screen and (max-width: 991px) {
+            top: 183px;;
         }
         .card {
-          background-color: #494949;
-          border-color: #494949;
+          background-color: #414141;
+          border-color: #414141;
           z-index: 2;
-          height: 250px;
-          width: 350px;
-          margin-inline: 40px;
-          top: 60px;
-          @media only screen and (max-width: 1540px) {
-            height: 100px;
-          }
           .vector {
-            position: absolute;
-            left: 50%;
-            top: -30px;
-            transform: translate(-50%);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
             width: 33px;
-            @media only screen and (max-width: 1540px) {
-              width: 18px;
+            @media only screen and (max-width: 991px) {
+            width: 20px;
             }
           }
           h1 {
             font-size: 18px;
             text-align: center;
             color: $seconday_color;
-            @media only screen and (max-width: 1540px) {
-              font-size: 10px;
+            @media only screen and (max-width: 1400px) {
+                font-size: 14px;
+            }
+            @media only screen and (max-width: 980px) {
+                font-size: 11px;
             }
           }
           p {
             color: $text;
-            @media only screen and (max-width: 1540px) {
-              font-size: 8px;
+            @media only screen and (max-width: 1400px) {
+                font-size: 10px;
+            }
+            @media only screen and (max-width: 980px) {
+                font-size: 8px;
             }
           }
         }
@@ -148,8 +151,12 @@ $text: #b2b2b2;
         top: 60px;
         transform: translate(-50%);
         color: $seconday_color;
-        @media only screen and (max-width: 1540px) {
-          font-size: 14px;
+        @media only screen and (max-width: 1200px) {
+          font-size: 25px;
+        }
+        @media only screen and (max-width: 991px) {
+          font-size: 18px;
+          top: 44px;
         }
       }
       .text {
@@ -162,12 +169,16 @@ $text: #b2b2b2;
         left: 50%;
         transform: translate(-50%);
         position: absolute;
-        @media only screen and (max-width: 1540px) {
-          top: 80px;
-          font-size: 12px;
-        }
         span {
           color: $seconday_color;
+        }
+        @media only screen and (max-width: 1200px) {
+          top: 95px;
+          font-size: 20px;
+        }
+        @media only screen and (max-width: 980px) {
+          font-size: 16px;
+          top: 73px;
         }
       }
       .btn {
@@ -177,21 +188,18 @@ $text: #b2b2b2;
         transform: translate(-50%);
         position: absolute;
         top: 210px;
-        @media only screen and (max-width: 1540px) {
-          top: 120px;
+        border-radius: 15px;
+        background-color: $interactive_text;
+        color: $seconday_color;
+        text-decoration: none;
+        @media only screen and (max-width: 1458px) {
+          top: 230px;
         }
-        a {
-          width: 25%;
-          border-radius: 15px;
-          background-color: $interactive_text;
-          color: $seconday_color;
-          padding: 5px;
-          padding-inline: 40px;
-          text-decoration: none;
-          @media only screen and (max-width: 1540px) {
-            width: 10%;
-            font-size: 10px;
-          }
+        @media only screen and (max-width: 1200px) {
+          top: 199px;
+        }
+        @media only screen and (max-width: 980px) {
+          top: 151px;
         }
       }
     }
